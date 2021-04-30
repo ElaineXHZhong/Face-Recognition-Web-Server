@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Image identity prediction</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+    </head>
+
+    <body>
+        <div class="container text-center">
+                <br><br><br><br><br><br><br>
+            <h3>Result of prediction:</h3>
+                <br><br>
+                {% for image in display %}  <!-- 列出每一张图片 -->
+                    <p> <img style="height: 150px" src="{{image[0].split(',')[0]}}"/> </p> 
+                    <p> <font color="#ff0033" size="3"> {{ image[0].split(',')[1] }} </font> &nbsp;&nbsp; {{image[0].split(',')[4]}} </p>
+                    {% for record in image %} <!-- 识别每张图片中的每个人(可能不止一个) -->
+                        <p> {{ record.split(',')[2] }} &nbsp;&nbsp; {{ record.split(',')[3] }} </p>
+                    {% endfor %}
+                {% endfor %}
+                <br><br>
+            <a href="{{ url_for('predict_batch_page') }}" class="btn btn-outline-dark">Back</a>
+        </div>
+    </body>
+</html>
