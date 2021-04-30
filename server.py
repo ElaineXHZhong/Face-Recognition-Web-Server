@@ -32,11 +32,11 @@ def index_page():   # select single predict mode or batch predict mode
     return render_template(template_name_or_list="index.html")
 
 @app.route("/predictSinglePage")
-def predict_single_page(): # manually upload single image file for prediction
+def predict_single_page(): # manually upload single image file for single prediction
     return render_template(template_name_or_list="predict_single.html")
 
 @app.route('/predictSingleImage', methods=['POST', 'GET'])
-def predict_single_image(): # get multiple image prediction results | upload image files via POST request and feeds them to the FaceNet model to get prediction results
+def predict_single_image(): # get single image prediction result | upload image files via POST request and feeds them to the FaceNet model to get prediction result
     images_savedir = "static/"
     if  os.path.exists(images_savedir):
         shutil.rmtree(images_savedir)
@@ -134,7 +134,7 @@ def predict_single_image(): # get multiple image prediction results | upload ima
         )
 
 @app.route("/predictBatchPage")
-def predict_batch_page(): # manually upload multiple image files for prediction
+def predict_batch_page(): # manually upload multiple image files for batch prediction
     return render_template(template_name_or_list="predict_batch.html")
 
 @app.route('/predictBatchImage', methods=['POST', 'GET'])
@@ -239,11 +239,11 @@ def predict_batch_image(): # get multiple image prediction results | upload imag
         )
 
 @app.route("/findSimilarKOLPage")
-def find_similar_kol_page(): # manually upload single image file for prediction
+def find_similar_kol_page(): # manually upload single image file to find top k similar face identity
     return render_template(template_name_or_list="find_similar_kol.html")
 
 @app.route('/findSimilarKOLResult', methods=['POST', 'GET'])
-def find_similar_kol_result(): # get multiple image prediction results | upload image files via POST request and feeds them to the FaceNet model to get prediction results
+def find_similar_kol_result(): # get top k similar face identity
     images_savedir = "static/"
     if  os.path.exists(images_savedir):
         shutil.rmtree(images_savedir)
