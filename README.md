@@ -65,7 +65,9 @@ Training classifier model on your own face dataset.
 
 ## Inspiration
 
-The code is heavily inspired by the [facenet](https://github.com/davidsandberg/facenet) implementation and [facenet-realtime-face-recognition](https://github.com/tamerthamoqa/facenet-realtime-face-recognition) implementation.
+The code of main server is heavily inspired by the [facenet](https://github.com/davidsandberg/facenet) implementation and [facenet-realtime-face-recognition](https://github.com/tamerthamoqa/facenet-realtime-face-recognition) implementation.
+
+The code of video server is heavily inspired by the [facial-recognition-video-facenet](https://github.com/radykov/facial-recognition-video-facenet) implementation (video recognition) and [flask-opencv-streaming](https://github.com/desertfury/flask-opencv-streaming) implementation (video streaming online).
 
 ## Processing 
 
