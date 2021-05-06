@@ -134,7 +134,5 @@ $python server.py
 ```
 
 **Notice:**
-```markdown
 1. the conda environment to run server.py must be the one in which the .pkl model is trained
 2. before run the server, copy folder datasets and models which contains 20180402-114759 to the root directory
-```
