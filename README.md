@@ -40,13 +40,15 @@ The [GPU Environment Configuration](GPU.md) is `Visual Studio 2017 + python 3.6.
 
 | API No.  |          API         |   Method  |                      Functionality                        |
 |:--------:|:--------------------:|:---------:|-----------------------------------------------------------|
-|    R1    |         `/`          |    GET    | select prediction mode: single, batch, top k similar      |
-|    R2    | `/predictSinglePage` |    GET    | manually upload single image file for identity prediction |
-|    R3    | `/predictSingleImage`| GET, POST | get single image prediction result |
-|    R4    | `/predictBatchPage`  |    GET    | manually upload multiple image files for identity prediction |
-|    R5    | `/predictBatchImage` | GET, POST | get multiple image prediction results |
-|    R6    | `/findSimilarKOLPage`|    GET    | manually upload single image file to find tip k similar identities |
-|    R7    | `/findSimilarKOLResult` | GET, POST | get tip k similar identities |
+|    R1    |         `/`          |    GET    | select prediction mode: video predict, single image predict, batch image predict, find similar identity |
+|    R2    | `/uploadVideoPage` |    GET    | manually upload video file for identity prediction |
+|    R3    | `/predictVideoResult`| GET, POST | get real-time face identity prediction result of uploaded video |
+|    R4    | `/predictSinglePage` |    GET    | manually upload single image file for identity prediction |
+|    R5    | `/predictSingleImage`| GET, POST | get single image prediction result |
+|    R6    | `/predictBatchPage`  |    GET    | manually upload multiple image files for identity prediction |
+|    R7    | `/predictBatchImage` | GET, POST | get multiple image prediction results |
+|    R8    | `/findSimilarKOLPage`|    GET    | manually upload single image file to find tip k similar identities |
+|    R9    | `/findSimilarKOLResult` | GET, POST | get tip k similar identities |
 
 <div align="center"><img src="https://res.cloudinary.com/okk/image/upload/v1618976931/samples/github_project/1_jvtpv0.png" width="70%" ></div>
 
@@ -78,7 +80,7 @@ $python src/crop.py C:/Users/PC/Desktop/kol_video C:/Users/PC/Desktop/kol_crop
 
 ##### 2. Detect, extract and align face images
 
-Copy all files under `src/align/` from facenet and rewrite based on the original Facenet code `src/align/align_dataset_mtcnn.py` to `src/align/align_dataset_mtcnn.py`
+Copy all files (det1.npy, det2.npy, det3.npy) under `src/align/` from facenet to folder `src/align/` and folder `other-server/video/align` except `align_dataset_mtcnn.py` and `detect_face.py`.
 ```bash
 $python src/align/align_dataset_mtcnn.py datasets/kol_crop datasets/kol_160 --image_size 160 --margin 32
 $python src/align/align_dataset_mtcnn.py datasets/kol_crop datasets/kol_160 --image_size 160 --margin 32 --gpu_memory_fraction 0.5 # If there is not enough memory in the GPU
@@ -106,15 +108,28 @@ $python src/predict.py datasets/kol_160/01/01_0001.jpg models/20180402-114759 mo
 $python src/predict.py datasets/kol_160/01/01_0001.jpg models/20180402-114759 models/kol.pkl --gpu_memory_fraction 0.5 # If there is not enough memory in the GPU
 ```
 
+##### 7. Predict Video identity
+```bash
+$python src/classifier.py TRAIN datasets/training_data_aligned models/20180402-114759/20180402-114759.pb models/newglint_classifier.pkl
+$python src/video_recognize.py
+```
+
 ## Start the Server
 
+#### Start the Main Server
 Firstly, quickly start the server from the command:
 ```bash
 $conda activate facenet
 $python server.py
 ```
-
 Secondly, open web browser: `http://127.0.0.1:5000`
+
+#### Start the Video Server
+```bash
+$cd other-server/video
+$python server.py
+# you can compare app.py and server.py to obvserve the server performance
+```
 
 **Notice:**
 ```markdown

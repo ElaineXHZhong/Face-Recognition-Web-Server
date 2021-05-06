@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Video identity prediction</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+        <meta http-equiv="Pragma" content="no-cache" />
+        <meta http-equiv="Expires" content="0" />
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+    </head>
+
+    <body>
+        <div class="container text-center">
+                <br>
+            <h1>Video Recognition Streaming</h1>
+                <br>
+            <img src="{{ url_for('predict_video_result') }}"/>
+                <br>
+            <a href="{{ url_for('upload_video_page') }}" class="btn btn-outline-dark">Back</a>
+        </div>
+    </body>
+</html>

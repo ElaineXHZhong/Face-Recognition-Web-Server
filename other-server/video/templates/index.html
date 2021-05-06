@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Video Streaming Demonstration</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+        <meta http-equiv="Pragma" content="no-cache" />
+        <meta http-equiv="Expires" content="0" />
+        <!-- 加入上面三行，清除页面缓存: https://blog.csdn.net/qappleh/article/details/97780536 -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+    </head>
+
+    <body>
+        <div class="container text-center">
+                <br>
+            <h1>Video Recognition Streaming</h1>
+                <br>
+            <img src="{{ url_for('video_feed') }}"/>
+                <br>
+            <!-- 方法1: 通过表单发送stop参数给后台服务器来停止程序运行(因为上面有清除页面缓存，所以不需要了)并返回上一页  -->
+            <!-- <form action="/video_feed" method="get">
+                <div>
+                  <label for="stop">Upload again?</label>
+                  <input name="stop" id="stop" value="Yes">
+                  <button>Submit</button>
+                </div>
+            </form> -->
+            <!-- 方法2: 通过超链接返回上一页  -->
+            <!-- <a href="http://localhost:5000/uploadVideoPage" class="button">Back</a> -->
+            <!-- 方法3: 通过按钮返回上一页  -->
+            <!-- <button onclick="window.location.href='http://localhost:5000/uploadVideoPage'">Back</button> -->
+
+            <!-- 方法1: 使用python传过来的参数  -->
+            <!-- <a href="{{ redirect_url }}" class="btn btn-outline-dark">Back</a> -->
+            <!-- 方法2: 直接写上请求地址  -->
+            <a href="http://localhost:8888/uploadVideoPage" class="btn btn-outline-dark">Back</a>
+        </div>
+    </body>
+</html>

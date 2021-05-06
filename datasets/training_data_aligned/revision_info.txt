@@ -1,0 +1,7 @@
+arguments: src\align\align_dataset_mtcnn.py datasets\people datasets\people_160
+--------------------
+tensorflow version: 1.7.0
+--------------------
+git hash: b''
+--------------------
+b''
