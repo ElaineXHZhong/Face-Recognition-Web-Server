@@ -139,7 +139,7 @@ def main(args):
                     currentYIndex = 40
 
                     idx = 0
-                    for name, count in person_detected.most_common(1):
+                    for name, count in person_detected.most_common(5):
                         aver_prob = mean(person_average_prob[name]) 
                         display = "%s: % 5.4f" %(name, aver_prob[0])
                         cv2.putText(frame, display, (20, currentYIndex + 20 * idx), cv2.FONT_HERSHEY_PLAIN, 1, (0, 0, 255), thickness=1, lineType=2)
