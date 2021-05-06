@@ -80,7 +80,7 @@ $python src/crop.py C:/Users/PC/Desktop/kol_video C:/Users/PC/Desktop/kol_crop
 
 ##### 2. Detect, extract and align face images
 
-Copy all files (det1.npy, det2.npy, det3.npy) under `src/align/` from facenet to folder `src/align/` and folder `other-server/video/align` except `align_dataset_mtcnn.py` and `detect_face.py`.
+Copy all files (det1.npy, det2.npy, det3.npy) under `src/align/` from facenet to folder `src/align/` except `align_dataset_mtcnn.py` and `detect_face.py`.
 ```bash
 $python src/align/align_dataset_mtcnn.py datasets/kol_crop datasets/kol_160 --image_size 160 --margin 32
 $python src/align/align_dataset_mtcnn.py datasets/kol_crop datasets/kol_160 --image_size 160 --margin 32 --gpu_memory_fraction 0.5 # If there is not enough memory in the GPU
@@ -125,6 +125,8 @@ $python server.py
 Secondly, open web browser: `http://127.0.0.1:5000`
 
 #### Start the Video Server
+Copy all files (det1.npy, det2.npy, det3.npy) under `src/align/` from facenet to folder `other-server/video/align` except `align_dataset_mtcnn.py` and `detect_face.py`.
+
 ```bash
 $cd other-server/video
 $python server.py
