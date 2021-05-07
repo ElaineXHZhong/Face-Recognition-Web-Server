@@ -38,6 +38,8 @@ The [GPU Environment Configuration](GPU.md) is `Visual Studio 2017 + python 3.6.
 
 ## API Overview
 
+<div align="center"><img src="https://res.cloudinary.com/okk/image/upload/v1620380785/samples/github_project/3_zbrs93.png" width="90%" ></div>
+
 ### Main Server
 
 | API No.  |          API         |   Method  |                      Functionality                        |
@@ -58,7 +60,6 @@ The [GPU Environment Configuration](GPU.md) is `Visual Studio 2017 + python 3.6.
 |    R1    | `/`                  |    GET    | manually upload video file for identity prediction        |
 |    R2    | `/video_feed`        | GET, POST | get real-time face identity prediction result of uploaded video |
 
-<div align="center"><img src="https://res.cloudinary.com/okk/image/upload/v1620380785/samples/github_project/3_zbrs93.png" width="90%" ></div>
 
 ## Pre-trained models
 | Model name      | LFW accuracy | Training dataset | Architecture |
