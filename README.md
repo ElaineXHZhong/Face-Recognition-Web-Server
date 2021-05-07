@@ -38,19 +38,27 @@ The [GPU Environment Configuration](GPU.md) is `Visual Studio 2017 + python 3.6.
 
 ## API Overview
 
+### Main Server
+
 | API No.  |          API         |   Method  |                      Functionality                        |
 |:--------:|:--------------------:|:---------:|-----------------------------------------------------------|
 |    R1    |         `/`          |    GET    | select prediction mode: video predict, single image predict, batch image predict, find similar identity |
-|    R2    | `/uploadVideoPage` |    GET    | manually upload video file for identity prediction |
-|    R3    | `/predictVideoResult`| GET, POST | get real-time face identity prediction result of uploaded video |
-|    R4    | `/predictSinglePage` |    GET    | manually upload single image file for identity prediction |
-|    R5    | `/predictSingleImage`| GET, POST | get single image prediction result |
-|    R6    | `/predictBatchPage`  |    GET    | manually upload multiple image files for identity prediction |
-|    R7    | `/predictBatchImage` | GET, POST | get multiple image prediction results |
-|    R8    | `/findSimilarKOLPage`|    GET    | manually upload single image file to find tip k similar identities |
-|    R9    | `/findSimilarKOLResult` | GET, POST | get tip k similar identities |
+|    R2    | `/predictSinglePage` |    GET    | manually upload single image file for identity prediction |
+|    R3    | `/predictSingleImage`| GET, POST | get single image prediction result |
+|    R4    | `/predictBatchPage`  |    GET    | manually upload multiple image files for identity prediction |
+|    R5    | `/predictBatchImage` | GET, POST | get multiple image prediction results |
+|    R6    | `/findSimilarKOLPage`|    GET    | manually upload single image file to find tip k similar identities |
+|    R7    | `/findSimilarKOLResult` | GET, POST | get tip k similar identities |
 
-<div align="center"><img src="https://res.cloudinary.com/okk/image/upload/v1618976931/samples/github_project/1_jvtpv0.png" width="70%" ></div>
+
+### Video Server
+
+| API No.  |          API         |   Method  |                      Functionality                        |
+|:--------:|:--------------------:|:---------:|-----------------------------------------------------------|
+|    R1    | `/`                  |    GET    | manually upload video file for identity prediction        |
+|    R2    | `/video_feed`        | GET, POST | get real-time face identity prediction result of uploaded video |
+
+<div align="center"><img src="https://res.cloudinary.com/okk/image/upload/v1620380785/samples/github_project/3_zbrs93.png" width="70%" ></div>
 
 ## Pre-trained models
 | Model name      | LFW accuracy | Training dataset | Architecture |
