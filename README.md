@@ -127,6 +127,10 @@ $python src/video_recognize.py
 
 ## Start the Server
 
+#### Configure all server
+
+Please copy `config.ini` which locate in root directory to other server's root directory to configure shared server port.
+
 #### Start the Main Server
 Firstly, quickly start the server from the command:
 ```bash
