@@ -45,12 +45,18 @@ The [GPU Environment Configuration](GPU.md) is `Visual Studio 2017 + python 3.6.
 | API No.  |          API         |   Method  |                      Functionality                        |
 |:--------:|:--------------------:|:---------:|-----------------------------------------------------------|
 |    R1    |         `/`          |    GET    | select prediction mode: video predict, single image predict, batch image predict, find similar identity |
-|    R2    | `/predictSinglePage` |    GET    | manually upload single image file for identity prediction |
-|    R3    | `/predictSingleImage`| GET, POST | get single image prediction result |
-|    R4    | `/predictBatchPage`  |    GET    | manually upload multiple image files for identity prediction |
-|    R5    | `/predictBatchImage` | GET, POST | get multiple image prediction results |
-|    R6    | `/findSimilarKOLPage`|    GET    | manually upload single image file to find tip k similar identities |
-|    R7    | `/findSimilarKOLResult` | GET, POST | get tip k similar identities |
+|    R2    |      `/trainModel`   |    GET    | page for uploading the compressed training set of still image or video |
+|    R3    |     `/trainExplain`  |    GET    | instruction page to instruct users how to organize training set in zip format |
+|    R4    |     `/trainByImage`  |    GET    | manually upload compressed training set of still image and direct to process server API `/` |
+|    R5    |     `/trainByVideo`  |    GET    | manually upload compressed training set of video and direct to process server API `/` |
+|    R6    | `/uploadVideoPage`   |    GET    | manually upload KOL video for real-time face recognition |
+|    R7    |`/predictVideoResult` | GET, POST | display page of real-time face recognition of face frame from video |
+|    R8    | `/predictSinglePage` |    GET    | manually upload single image file for identity prediction |
+|    R9    | `/predictSingleImage`| GET, POST | get single image prediction result |
+|    R10   | `/predictBatchPage`  |    GET    | manually upload multiple image files for identity prediction |
+|    R11   | `/predictBatchImage` | GET, POST | get multiple image prediction results |
+|    R12   | `/findSimilarKOLPage`|    GET    | manually upload single image file to find tip k similar identities |
+|    R13   | `/findSimilarKOLResult` | GET, POST | get tip k similar identities |
 
 ### Process Server
 
