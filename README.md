@@ -38,7 +38,7 @@ The [GPU Environment Configuration](GPU.md) is `Visual Studio 2017 + python 3.6.
 
 ## API Overview
 
-<div align="center"><img src="https://res.cloudinary.com/okk/image/upload/v1620812273/samples/github_project/3_c8z8kx.png" width="90%" ></div>
+<div align="center"><img src="https://res.cloudinary.com/okk/image/upload/v1620812273/samples/github_project/3_c8z8kx.png" width="100%" ></div>
 
 ### Main Server
 
@@ -52,6 +52,15 @@ The [GPU Environment Configuration](GPU.md) is `Visual Studio 2017 + python 3.6.
 |    R6    | `/findSimilarKOLPage`|    GET    | manually upload single image file to find tip k similar identities |
 |    R7    | `/findSimilarKOLResult` | GET, POST | get tip k similar identities |
 
+### Process Server
+
+| API No.  |          API         |   Method  |                      Functionality                        |
+|:--------:|:--------------------:|:---------:|-----------------------------------------------------------|
+|    R1    | `/`                  |    GET    | navigation page for user to complete the processing phase of training |
+|    R2    | `/processingProgress`| GET, POST | display page which shows user training progress |
+|    R3    | `/align`             | GET, POST | guide user to complete the 'align faces' action and see alignment result |
+|    R4    | `/clean`             | GET, POST | guide user to complete the 'clean faces' action and see cleaning result |
+|    R5    | `/train`             | GET, POST | guide user to complete the 'train model' action and see training result |
 
 ### Video Server
 
