@@ -38,7 +38,7 @@ The [GPU Environment Configuration](GPU.md) is `Visual Studio 2017 + python 3.6.
 
 ## API Overview
 
-<div align="center"><img src="https://res.cloudinary.com/okk/image/upload/v1620381064/samples/github_project/3_jmxgbi.png" width="90%" ></div>
+<div align="center"><img src="https://res.cloudinary.com/okk/image/upload/v1620812273/samples/github_project/3_c8z8kx.png" width="90%" ></div>
 
 ### Main Server
 
