@@ -97,6 +97,8 @@ The code of video server is heavily inspired by the [facial-recognition-video-fa
 
 Facenet's standard operating procedures and some automation procedures need to be carried out to get the classifier model for back-end server to use for prediction.
 
+### Manual processing
+
 ##### 1. Crop from video to images
 
 Install FFmpeg
@@ -140,6 +142,21 @@ $python src/classifier.py TRAIN datasets/training_data_aligned models/20180402-1
 $python src/video_recognize.py
 ```
 
+### Automatic processing
+
+Simply execute the automatic processing by the following order on the web.
+
+```markdown
+1. {Main Server} /trainModel
+2. Select: 
+    - upload image zip 
+    - upload video zip
+3. {Process Server} /
+4. {Process Server} /processingProgress
+5. {Process Server} /align
+6. {Process Server} /clean
+```
+
 ## Start the Server
 
 #### 1. Configure all server
@@ -152,7 +169,7 @@ Firstly, quickly start the server from the command:
 $conda activate facenet
 $python server.py
 ```
-Secondly, open web browser: `http://127.0.0.1:5000`
+Secondly, open web browser: `http://127.0.0.1:{main.server.port}` (detail in `config.ini`)
 
 #### 3. Start the Process Server
 Copy all files (det1.npy, det2.npy, det3.npy) under `src/align/` from facenet to folder `other-server/process/align` except `align_dataset_mtcnn.py` and `detect_face.py`.
