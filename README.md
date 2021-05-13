@@ -158,6 +158,7 @@ Simply execute the automatic processing by the following order on the web.
 ```
 **Notice:**
 1. In {Process Server} /clean, the number `if dist < 1.06:` is represented by the horizontal distance between the face, when the face distance is smaller than 1.06 can be regarded as the same person.
+2. If the GPU memory is not enough, the CPU can be directly used to run by `pip install tensorflow==1.7.0`.
 
 
 ## Start the Server
