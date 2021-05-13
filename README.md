@@ -142,11 +142,11 @@ $python src/video_recognize.py
 
 ## Start the Server
 
-#### Configure all server
+### Configure all server
 
 Please copy `config.ini` which locate in root directory to other server's root directory to configure shared server port.
 
-#### Start the Main Server
+### Start the Main Server
 Firstly, quickly start the server from the command:
 ```bash
 $conda activate facenet
@@ -154,7 +154,7 @@ $python server.py
 ```
 Secondly, open web browser: `http://127.0.0.1:5000`
 
-#### Start the Process Server
+### Start the Process Server
 Copy all files (det1.npy, det2.npy, det3.npy) under `src/align/` from facenet to folder `other-server/process/align` except `align_dataset_mtcnn.py` and `detect_face.py`.
 
 ```bash
@@ -162,7 +162,7 @@ $cd other-server/process
 $python server.py
 ```
 
-#### Start the Video Server
+### Start the Video Server
 Copy all files (det1.npy, det2.npy, det3.npy) under `src/align/` from facenet to folder `other-server/video/align` except `align_dataset_mtcnn.py` and `detect_face.py`.
 
 ```bash
