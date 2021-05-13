@@ -154,8 +154,11 @@ Simply execute the automatic processing by the following order on the web.
 3. {Process Server} /
 4. {Process Server} /processingProgress
 5. {Process Server} /align
-6. {Process Server} /clean
+6. {Process Server} /clean 
 ```
+**Notice:**
+1. In {Process Server} /clean, the number 1.06 is represented by the horizontal distance between the face, when the face distance is smaller than 1.06 can be regarded as the same person.
+
 
 ## Start the Server
 
