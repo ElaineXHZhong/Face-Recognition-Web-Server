@@ -193,5 +193,6 @@ $python server.py
 ```
 
 **Notice:**
-1. the conda environment to run server.py must be the one in which the .pkl model is trained
-2. before run the server, copy folder datasets and models which contains 20180402-114759 to the root directory
+1. The conda environment to run server.py must be the one in which the .pkl model is trained.
+2. Before run the server, copy folder datasets and models which contains 20180402-114759 to the root directory.
+3. In order to display image properly on HTML page, the path of the image needs to be relative path to the root directory for each project (mian or sub).
