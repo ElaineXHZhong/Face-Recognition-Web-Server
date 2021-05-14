@@ -165,7 +165,7 @@ Simply execute the automatic processing by the following order on the web.
 
 #### 1. Configure all server
 
-Please copy `config.ini` which locate in root directory to other server's root directory to configure shared server port.
+Please edit [`config.ini`](config.ini) which locate in root directory to shared variable.
 
 #### 2. Start the Main Server
 Firstly, quickly start the server from the command:

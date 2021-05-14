@@ -135,7 +135,7 @@ Visual Studio 2017 + python 3.6.12 + tensorflow-gpu 1.7.0 + CUDA 9.0 + cuDNN 7.0
     $pip install numpy==1.16.2
     $pip install scipy==1.2.1
     # 后面启动server的时候还需要额外安装以下包
-    $pip install pypinyin waitress imutils flask
+    $pip install pypinyin waitress imutils flask pillow
     # numpy如果不是指定版本，需要修改代码: numpy\lib\npyio.py: allow_pickle=False -> allow_pickle=True
     ```
 12. 保持一致
