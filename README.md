@@ -19,6 +19,7 @@ $cd facenet
 $pip install -r requirements.txt
 $pip uninstall -y tensorflow
 $pip install tensorflow-gpu==1.7.0
+$pip install xlrd==1.2.0
 ```
 
 Some packages require a specific version for the program to work properly:   ![](https://img.shields.io/badge/numpy-1.16.2-brightgreen) ![](https://img.shields.io/badge/scipy-1.2.1-brightgreen)

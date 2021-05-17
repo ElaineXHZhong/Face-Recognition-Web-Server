@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Train Face Recognition Model</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+</head>
+
+<body>
+<div class="container text-left">
+        <br><br>
+    <h3>Important: Training set arrangement instruction</h3>
+        <br>    
+    <h4>1. If you choose image to arrange training set</h4>
+    <p>The directory structure should look like the format below:</p>
+    <p> |-KOL/ <br>
+        |----Anna/ <br>
+        |--------Anna_0001.png/ <br>
+        |--------Anna_0002.png/ <br>
+        |--------Anna_0003.png/ <br>
+        |----Bob/ <br>
+        |--------Bob_0001.png/ <br>
+        |--------Bob_0002.png/ <br>
+        |--------Bob_0003.png/ <br>
+    </p>
+    <p>Finally, zip the root folder KOL to get KOL.zip and select "Upload image zip file for training" to upload the KOL.zip file.</p>
+    <p>Notice: All image files should be suffixed with ['png', 'jpg', 'jpeg'] only! Other suffix names are not allowed!</p>
+
+    <br>    
+    <h4>2. If you choose video to arrange training set</h4>
+    <p>The directory structure should look like the format below:</p>
+    <p> |-KOL/ <br>
+        |----Anna/ <br>
+        |--------Anna_0001.mp4/ <br>
+        |--------Anna_0002.mp4/ <br>
+        |--------Anna_0003.mp4/ <br>
+        |----Bob/ <br>
+        |--------Bob_0001.mp4/ <br>
+        |--------Bob_0002.mp4/ <br>
+        |--------Bob_0003.mp4/ <br>
+    </p>
+    <p>Finally, zip the root folder KOL to get KOL.zip and select "Upload video zip file for training" to upload the KOL.zip file.</p>
+    <p>Notice: All video files should be suffixed with ['flv', 'avi', 'mp4', 'mov', 'wmv'] only! Other suffix names are not allowed!</p>
+
+    <br>    
+    <h4>Notice</h4>
+    <p>1. xxx </p>
+    <br>
+
+    <a href="{{ url_for('train_model') }}" class="btn btn-outline-dark">Back</a>
+</div>
+
+</body>
+</html>

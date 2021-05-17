@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Import Result</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+</head>
+
+<body>
+    <div class="container text-left">
+        <br><br><br>
+    <h2>Import Result</h2>    
+        <br><br>
+    <h4>Import Set Summary</h5>
+        <br>
+        <p>
+            Total number of KOL     : {{ display[1][1] }} <br>
+            KOL Name                : {{ display[1][0] }} <br>
+            Total number of images  : {{ display[1][2] }} <br>
+        </p>
+        <br><br>
+    <h4>Training Pool Summary</h5>
+        <br>
+        <p>
+            Total number of KOL     : {{ display[0][0] }} <br>
+            Total number of images  : {{ display[0][1] }} <br>
+        </p>
+        <br><br>
+    <a href="/?output_filename={{param}}" class="btn btn-outline-dark">Back</a>
+    </div>
+</body>
+</html>

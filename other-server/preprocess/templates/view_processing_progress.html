@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>View process progress</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+</head>
+
+<body>
+    <div class="container text-left">
+        <br><br><br>
+    <h2>Model training progress</h2>    
+        <br><br>
+    <h4>Training set summary </h5>
+        <br>
+        <p>
+        Total number of KOL     : {{ display.split(',')[0] }} <br>
+        Total number of images  : {{ display.split(',')[1] }} </p>
+        <br>
+    <h4>Processing progress </h5> 
+        <br>
+        <p>  
+        Step 1 - Align face  : {{ display.split(',')[2] }} <br>
+        Step 2 - Clean face  : {{ display.split(',')[3] }} <br>
+        Step 3 - Import set  : {{ display.split(',')[4] }} <br>
+        Step 4 - Train model : {{ display.split(',')[5] }} </p>
+        <br>
+    <h4>Notice </h5>
+        <br>
+        <p> 
+        1. There are four processing status: {{ status[0] }}, {{ status[1] }}, {{ status[2] }}, {{ status[3] }} <br>
+        2. Make sure you complete the three steps above to make your training successful! <br>
+        </p>
+        <br>
+    <a href="/?output_filename={{param}}" class="btn btn-outline-dark">Back</a>
+    <a href="#" onClick="document.location.reload()" class="btn btn-outline-dark">Refresh</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pre-prcocessing on training set</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+</head>
+
+<body>
+    <div class="container text-center">
+            <br><br>
+        <h1>Start pre-process your training set!</h1>
+            <br><br><br>
+        <a href="/processingProgress?param={{param}}" class="btn btn-outline-dark">Click here to see processing progress</a>
+            <br><br>
+        <h6>Step 1</h6>
+        <a href="/align?param={{param}}" class="btn btn-outline-dark">Click here to align faces in training set</a>
+            <br><br>
+        <h6>Step 2</h6>
+        <a href="/clean?param={{param}}" class="btn btn-outline-dark">Click here to clean faces in training set</a>
+            <br><br>
+        <h6>Step 3</h6>
+        <a href="/import_clean?param={{param}}" class="btn btn-outline-dark">Click here to import your dataset to Taining Pool</a>
+            <br><br>
+    
+        <a href="{{ back_url }}" class="btn btn-outline-dark">Back</a>
+
+    </div>
+</body>
+</html>

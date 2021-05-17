@@ -5,6 +5,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
 </head>
 
@@ -13,7 +16,8 @@
             <br><br>
         <h1>Server Online</h1>
             <br><br><br>
-            <br><br><br><br><br>
+        <a href="{{ url_for('train_model') }}" class="btn btn-outline-dark">Click here for training face recognition model!</a>
+            <br><br><br>
         <a href="{{ url_for('upload_video_page') }}" class="btn btn-outline-dark">Click here for predicting kol in video!</a>
             <br><br><br>
         <a href="{{ url_for('predict_single_page') }}" class="btn btn-outline-dark">Click here for single image identity prediction!</a>

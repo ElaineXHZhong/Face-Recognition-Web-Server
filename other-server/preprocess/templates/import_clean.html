@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pre-prcocessing on training set</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+</head>
+
+<body>
+    <h5 align="center">Select the KOL you want to merge into the Training Pool</h5>
+    <br><br>
+    <h3>Detect {{same_identity}} kol already exist in Training Pool!</h3> 
+    <br>
+    <p> Notice: <br>
+        • The kol you upload that does not exist in the training pool will be directly imported, so don't worry.<br>
+        • Just select the kol you want to merge to Training Pool from the following KOLs (the ones already in the Training Pool). <br>
+            • If you want to merge all existed kol, simply tick the "All" checkbox and click submit button.<br>
+            • If you don't want to merge any of them, simply tick the "None" checkbox and click submit button. <br>
+    </p>
+    <br>
+    <form action="/import_result?output_filename={{param}}" method="post">
+        <div class="MyDiv">
+            {% for each in same_uuid_name %}
+            <label>
+                <input type="checkbox" name="s_option" value="{{each[0]}}" > {{each[1]}}
+            </label>
+            {% endfor %}
+            <br>
+            <label>
+                <input type="checkbox" name="s_option" value="All" > All
+            </label>
+            <label>
+                <input type="checkbox" name="s_option" value="None" > None
+            </label>
+        </div>
+        <input type="submit" value="Submit"/>
+    </form>
+    <br><br>
+    <a href="/?output_filename={{param}}" class="btn btn-outline-dark">Back</a>
+    </div>
+</body>
+</html>

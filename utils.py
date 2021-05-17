@@ -1,4 +1,7 @@
 import os
+import cv2
+import shutil
+import zipfile
 import numpy as np
 from scipy import misc
 import tensorflow as tf
@@ -10,11 +13,15 @@ from tensorflow.python.platform import gfile
 from align.detect_face import detect_face
 from align.detect_face import create_mtcnn
 
-allowed_set = set(['png', 'jpg', 'jpeg'])           # allowed image formats for upload
+allowed_img_set = set(['png', 'jpg', 'jpeg'])           # allowed image formats for upload
+allowed_video_set = set(['flv', 'avi', 'mp4', 'mov', 'wmv'])
 
+def allowed_img_file(filename, allowed_img_set):
+    check = '.' in filename and filename.rsplit('.', 1)[1].lower() in allowed_img_set
+    return check
 
-def allowed_file(filename, allowed_set):
-    check = '.' in filename and filename.rsplit('.', 1)[1].lower() in allowed_set
+def allowed_video_file(filename, allowed_video_set):
+    check = '.' in filename and filename.rsplit('.', 1)[1].lower() in allowed_video_set
     return check
 
 
@@ -171,4 +178,39 @@ def load_and_align_data(image_paths):
                 img_list.append(prewhitened)	
             images = np.stack(img_list) # (3, 160, 160, 3)
             return images, count_per_image
- 
+
+def format_dataset(file_name):
+    zip_file = zipfile.ZipFile(file_name)
+    format_zip = []
+    for names in zip_file.namelist():
+        if os.path.splitext(names)[-1] == '.zip':
+            format_zip.append(0)
+        else:
+            format_zip.append(1)
+    return format_zip
+    
+def un_zip(file_name):
+    """unzip zip file"""
+    zip_file = zipfile.ZipFile(file_name)
+    if os.path.isdir(os.path.splitext(file_name)[0]):
+        pass
+    else:
+        os.mkdir(os.path.splitext(file_name)[0])
+    for names in zip_file.namelist():
+        zip_file.extract(names, os.path.splitext(file_name)[0])
+    zip_file.close()
+    if os.path.exists(file_name):
+        os.remove(file_name)
+    else:
+        print("The file " + file_name + " does not exist")
+
+def create(dir):
+    if not os.path.exists(dir):
+        os.makedirs(dir)
+
+def renew(dir):
+    if os.path.exists(dir):
+        shutil.rmtree(dir)
+    if not os.path.exists(dir):
+        os.makedirs(dir)
+
