@@ -2,7 +2,7 @@
 
 - <a href="#main">Main Server</a>
 - <a href="#process">Process Server</a>
-- <a href="#video">Main Server</a>
+- <a href="#video">Video Server</a>
 
 ### <span id="main">Main Server</span>
 
