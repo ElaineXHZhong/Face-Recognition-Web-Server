@@ -1,5 +1,9 @@
 # GPU Environment Configuration
 
+以下两种环境均可:
+- `Visual Studio 2017 + python 3.6.12 + tensorflow-gpu 1.7.0 + CUDA 9.0 + cuDNN 7.0.5 + facenet site-packages`
+- `CUDA 11.0 + tensorflow-gpu 1.14.0`
+
 ## Prerequisite software
 
 配置前先安装一些必备软件:
