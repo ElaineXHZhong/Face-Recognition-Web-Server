@@ -67,7 +67,9 @@ The [GPU Environment Configuration](GPU.md) is `Visual Studio 2017 + python 3.6.
 |    R2    | `/processingProgress`| GET, POST | display page which shows user training progress |
 |    R3    | `/align`             | GET, POST | guide user to complete the 'align faces' action and see alignment result |
 |    R4    | `/clean`             | GET, POST | guide user to complete the 'clean faces' action and see cleaning result |
-|    R5    | `/train`             | GET, POST | guide user to complete the 'train model' action and see training result |
+|    R5    | `/import_clean`      | GET, POST | guide user to select which kol to import to the Training Pool           |
+|    R6    | `/import_result`     | GET, POST | import selected kol to Training Pool and display pool summary |
+|    R7    | `/train_model`       | GET, POST | guide user to complete the 'train model' action and see training result |
 
 ### Video Server
 
