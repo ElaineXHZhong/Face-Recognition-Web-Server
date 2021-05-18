@@ -1,6 +1,10 @@
 # API Specification
 
-### Main Server
+- <a href="#main">Main Server</a>
+- <a href="#process">Process Server</a>
+- <a href="#video">Main Server</a>
+
+### <span id="main">Main Server</span>
 
 | API No.  |          API         |   Method  |                      Functionality                        |
 |:--------:|:--------------------:|:---------:|-----------------------------------------------------------|
@@ -18,7 +22,7 @@
 |    R12   | `/findSimilarKOLPage`|    GET    | manually upload single image file to find tip k similar identities |
 |    R13   | `/findSimilarKOLResult` | GET, POST | get tip k similar identities |
 
-### Process Server
+### <span id="process">Process Server</span>
 
 | API No.  |          API         |   Method  |                      Functionality                        |
 |:--------:|:--------------------:|:---------:|-----------------------------------------------------------|
@@ -30,7 +34,7 @@
 |    R6    | `/import_result`     | GET, POST | import selected kol to Training Pool and display pool summary |
 |    R7    | `/train_model`       | GET, POST | guide user to complete the 'train model' action and see training result |
 
-### Video Server
+### <span id="video">Video Server</span>
 
 | API No.  |          API         |   Method  |                      Functionality                        |
 |:--------:|:--------------------:|:---------:|-----------------------------------------------------------|
