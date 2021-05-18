@@ -1,6 +1,8 @@
 import os
 import cv2
+import math
 import time
+import pickle
 import shutil
 import random
 import pickle
@@ -13,12 +15,16 @@ import tensorflow as tf
 from waitress import serve
 import facenet.facenet as facenet
 import align.detect_face as detect_face
+from sklearn.svm import SVC
 from flask import Flask, request, render_template, Response, redirect
+
 import warnings
 warnings.simplefilter(action='ignore', category=FutureWarning)
+
 from PIL import Image
 Image.MAX_IMAGE_PIXELS = None
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
+
 from utils import (
     get_dataset,
     renew,
@@ -27,7 +33,9 @@ from utils import (
     get_class_list,
     name_to_csv,
     xlsx_to_csv_pd,
-    create
+    create,
+    split_dataset,
+    get_image_paths_and_labels
 )
 
 app                         = Flask(__name__)
@@ -337,7 +345,6 @@ def clean():
                                     print('face is inner of range!')
                                     continue
                                 else:
-                                    print("叶叶: ", image_path)
                                     iterate_paths.append(image_path)
                                     cropped = img[bb[i][1]:bb[i][3], bb[i][0]:bb[i][2], :]
                                     scaled = cv2.resize(cropped, (image_size, image_size), interpolation=cv2.INTER_CUBIC)
@@ -358,19 +365,20 @@ def clean():
                                     if best_class_probabilities > 0.09:
                                         person_detected[best_name] += 1
                 base_image = []
-                if len(person_detected.most_common(1)) == 0 and len(iterate_paths) != 0:
-                    base_image.append(iterate_paths[0])
-                if len(person_detected.most_common(1)) == 0 and len(iterate_paths) == 0: 
-                    base_image.append(image_paths[0])
-                else:
-                    for name, count in person_detected.most_common(1):
-                        Top_KOL_name.append(name)
-                        Top_KOL = Top_KOL_name[0]
-                        Top_KOL_max_prob = class_imageProb[Top_KOL]
-                        Top_KOL_max_prob_index = Top_KOL_max_prob.index(max(Top_KOL_max_prob))
-                        Top_KOL_max_prob_image_path = image_paths[Top_KOL_max_prob_index]
-                        base_image.append(Top_KOL_max_prob_image_path)
-                        print("base image 是: ", Top_KOL_max_prob_image_path)
+                # if len(person_detected.most_common(1)) == 0 and len(iterate_paths) != 0:
+                #     base_image.append(iterate_paths[0])
+                # if len(person_detected.most_common(1)) == 0 and len(iterate_paths) == 0: 
+                #     base_image.append(image_paths[0])
+                # else:
+                #     for name, count in person_detected.most_common(1):
+                #         Top_KOL_name.append(name)
+                #         Top_KOL = Top_KOL_name[0]
+                #         Top_KOL_max_prob = class_imageProb[Top_KOL]
+                #         Top_KOL_max_prob_index = Top_KOL_max_prob.index(max(Top_KOL_max_prob))
+                #         Top_KOL_max_prob_image_path = image_paths[Top_KOL_max_prob_index]
+                #         base_image.append(Top_KOL_max_prob_image_path)
+                #         # print("base image 是: ", Top_KOL_max_prob_image_path)
+                base_image.append(image_paths[0])
                 image_files = ['top_kol', 'current_image']
                 image_files[0] = base_image[0]
                 for image_path in iterate_paths:
@@ -498,6 +506,7 @@ def import_clean():
                 row_index = df[df["UUID"]==uuid].index.tolist()[0]
                 name = df["Name"].iloc[row_index]
                 add_uuid_name.append([uuid, name])
+            print("================Give user selection to choose which kol to train================")
             return render_template(
                 template_name_or_list="import_clean.html",
                 param=process_obj,
@@ -528,45 +537,79 @@ def import_result():
     class_name_clean    = get_class_list(dataset_clean)
     class_name_pool     = get_class_list(dataset_pool)
     add_class_uuid      = [x for x in class_name_clean if x not in class_name_pool]
+    same_class_uuid     = [x for x in class_name_clean if x in class_name_pool] 
+
+    dataset             = dir_tree(output_dir)
+    class_number        = len(dataset)
+    one_class_image_number = []
+    for i in range(len(dataset)):
+        one_class_image_number.append(len(dataset[i]))
+    image_number        = sum(one_class_image_number)
+    before_import       = [class_number, image_number]
 
     if request.method == "POST":
-        data                    = request.values.getlist("s_option")
-        user_select_exist_uuid  = data
-    # return render_template("index.html", uuid_name=uuid_name)
+        select_option               = request.values.getlist("select")
+        data                        = request.values.getlist("s_option")
+        select_content              = []
+        if select_option[0] == "All":
+            select_content.append(same_class_uuid)
+        elif select_option[0] == "None":
+            select_content.append([])
+        else:
+            select_content.append(data)
+        user_select_exist_uuid  = select_content[0]
         for uuid in add_class_uuid:
-            original_path   = os.path.join(clean_dir, uuid)
-            dest_path       = os.path.join(output_dir, uuid)
+            original_path       = os.path.join(clean_dir, uuid)
+            dest_path           = os.path.join(output_dir, uuid)
             shutil.copytree(original_path, dest_path)
-        import_image_number = 0
         for uuid in user_select_exist_uuid:
-            clean_uuid_dir  = os.path.join(clean_dir, uuid)
-            arrang_uuid_dir = os.path.join(arrange_dir, uuid)
-            pool_uuid_dir   = os.path.join(output_dir, uuid)
+            clean_uuid_dir      = os.path.join(clean_dir, uuid).replace('\\','/')
+            arrang_uuid_dir     = os.path.join(arrange_dir, uuid).replace('\\','/')
+            pool_uuid_dir       = os.path.join(output_dir, uuid).replace('\\','/')
             create(arrang_uuid_dir)
             for image in os.listdir(pool_uuid_dir):
-                image_path  = os.path.join(pool_uuid_dir, image).replace('\\','/')
+                image_path      = os.path.join(pool_uuid_dir, image).replace('\\','/')
                 shutil.move(image_path, arrang_uuid_dir)
             if not os.path.exists(pool_uuid_dir):
                 os.mkdir(pool_uuid_dir)
-            arrange_file    = []
+            arrange_file        = []
             for image in os.listdir(clean_uuid_dir):
-                image_path  = os.path.join(clean_uuid_dir, image).replace('\\','/')
+                image_path      = os.path.join(clean_uuid_dir, image).replace('\\','/')
                 arrange_file.append(image_path)
             for image in os.listdir(arrang_uuid_dir):
-                image_path  = os.path.join(arrang_uuid_dir, image).replace('\\','/')
+                image_path      = os.path.join(arrang_uuid_dir, image).replace('\\','/')
                 arrange_file.append(image_path)
-            count           = 0
+            count               = 0
             for path in arrange_file:
-                import_image_number += 1
-                count       += 1
+                count           += 1
                 _, file_extension = os.path.splitext(path)
                 pool_image_name = "{}{}".format(uuid + "_" + str(count).zfill(5), file_extension)
-                pool_uuid_path  = os.path.join(pool_uuid_dir, pool_image_name)
-                shutil.move(path, pool_uuid_path)    
-        with open(align_clean_train_file,'w') as f:    
-            import_status = 'complete'
-            content = align_status + ',' + clean_status + ',' + import_status + ',' + train_status + ',' + unzip_file + ',' + KOL_root_dir
-            f.write(content)
+                pool_uuid_path  = os.path.join(pool_uuid_dir, pool_image_name).replace('\\','/')
+                shutil.copy(path, pool_uuid_path)    
+
+        xlsx_file           = os.path.join(project_root_folder, "training_set/", process_obj, "txt", "KOL_UUID.xlsx")
+        csv_file            = name_to_csv(xlsx_file)
+        df                  = pd.read_csv(csv_file, encoding="utf-8")
+        add_class_name      = []
+        for uuid in add_class_uuid:
+            row_index       = df[df["UUID"]==uuid].index.tolist()[0]
+            name            = df["Name"].iloc[row_index]
+            add_class_name.append(name)
+        select_exist_name   = []
+        for uuid in user_select_exist_uuid:
+            row_index       = df[df["UUID"]==uuid].index.tolist()[0]
+            name            = df["Name"].iloc[row_index]
+            select_exist_name.append(name)
+        name_list           = add_class_name + select_exist_name
+        import_class_number = len(name_list) 
+
+        import_image_number = 0
+        for uuid in (add_class_uuid + user_select_exist_uuid):
+            uuid_dir        = os.path.join(clean_dir, uuid)
+            for path in os.listdir(uuid_dir):
+                import_image_number += 1
+
+        import_summary      = [add_class_name, select_exist_name, import_class_number, import_image_number]
 
         dataset             = dir_tree(output_dir)
         class_number        = len(dataset)
@@ -574,28 +617,24 @@ def import_result():
         for i in range(len(dataset)):
             one_class_image_number.append(len(dataset[i]))
         image_number        = sum(one_class_image_number)
-        record1             = [class_number, image_number]
+        after_import        = [class_number, image_number]
 
-        name_list           = []
-        xlsx_file           = os.path.join(project_root_folder, "training_set/", process_obj, "txt", "KOL_UUID.xlsx")
-        csv_file            = name_to_csv(xlsx_file)
-        df                  = pd.read_csv(csv_file, encoding="utf-8")
-        add_uuid            = add_class_uuid + user_select_exist_uuid
-        for uuid in add_uuid:
-            row_index       = df[df["UUID"]==uuid].index.tolist()[0]
-            name            = df["Name"].iloc[row_index]
-            # uuid_name.append([uuid, name])
-            name_list.append(name)
-        import_class_number = len(name_list) 
-        record2             = [name_list, import_class_number, import_image_number]
+        with open(align_clean_train_file,'w') as f:    
+            import_status = 'complete'
+            content = align_status + ',' + clean_status + ',' + import_status + ',' + train_status + ',' + unzip_file + ',' + KOL_root_dir
+            f.write(content)
+        print("================Complete Dataset Import================")
+    
+        # zip_obj             = os.path.join(project_root_folder, "training_set/", process_obj)
+        # if os.path.exists(zip_obj):
+        #     shutil.rmtree(zip_obj)
 
-        display             = []
-        display.append([record1, record2])
-        print("=============================")
-        print(display)
         return render_template(
             template_name_or_list="import_result.html",
-            display=display
+            param=process_obj,
+            before_import=before_import,
+            import_summary=import_summary,
+            after_import=after_import
         )
     else:
         return render_template(
@@ -603,38 +642,94 @@ def import_result():
             status="POST HTTP method required!"
         )
 
+@app.route("/train_model")
+def train_model(): 
+    start_time                  = time.time()
+    process_obj                 = request.args.get('param')
+    data_dir                    = KOL_dataset
+    align_clean_train_file      = os.path.join(project_root_folder, "training_set/", process_obj, "txt", "align_clean_import_train.txt")
+    align_clean_train_status    = open(align_clean_train_file, "r")
+    lines                       = align_clean_train_status.readlines()
+    align_status                = lines[0].split(',')[0]
+    clean_status                = lines[0].split(',')[1]
+    import_status               = lines[0].split(',')[2]
+    unzip_file                  = lines[0].split(',')[4]
+    KOL_root_dir                = lines[0].split(',')[5]
 
+    with open(align_clean_train_file,'w') as f:    
+        train_status = 'start'
+        content = align_status + ',' + clean_status + ',' + import_status + ',' + train_status + ',' + unzip_file + ',' + KOL_root_dir
+        f.write(content)
 
+    np.random.seed(seed=666)
+    dataset_tmp             = get_dataset(data_dir)
+    train_set, test_set     = split_dataset(dataset_tmp)
+    dataset                 = train_set
+    unqualified_kol         = []
+    for cls in dataset:
+        if len(cls.image_paths) <= 0:
+            unqualified_kol.append(cls.name)
+        # assert(len(cls.image_paths)>0, 'There must be at least one image for each class in the dataset')
+    back_url = "http://localhost:" + str(config.getint('main.server', 'port')) + '/trainModel'
+    if len(unqualified_kol) != 0:
+        return render_template(
+            template_name_or_list='train_warning1.html',
+            param=process_obj,
+            unqualified_kol=unqualified_kol,
+            back_url=back_url
+        )    
+    else:
+        paths, labels   = get_image_paths_and_labels(dataset)
+        print('Number of classes: %d' % len(dataset))
+        print('Number of images: %d' % len(paths))
 
+        print('Loading feature extraction model')
+        embedding_size  = embeddings.get_shape()[1]
 
+        print('Calculating features for images')
+        nrof_images     = len(paths)
+        # Number of images to process in a batch
+        batch_size      = 90
+        nrof_batches_per_epoch = int(math.ceil(1.0*nrof_images / batch_size))
+        emb_array       = np.zeros((nrof_images, embedding_size))
+        for i in range(nrof_batches_per_epoch):
+            start_index = i*batch_size
+            end_index   = min((i+1)*batch_size, nrof_images)
+            paths_batch = paths[start_index:end_index]
+            images      = facenet.load_data(paths_batch, False, False, image_size)
+            feed_dict   = { images_placeholder:images, phase_train_placeholder:False }
+            emb_array[start_index:end_index,:] = sess.run(embeddings, feed_dict=feed_dict)
+        classifier_filename     = os.path.join(config.get('KOL.model', 'new_path', raw = 0), "KOL.pkl")
+        classifier_filename_exp = os.path.expanduser(classifier_filename)
 
-        # uuid_name           = []
-        # for i in range(df.shape[0]):
-        #     # paltform    = df["Platform"].iloc[i]
-        #     uuid        = df["UUID"].iloc[i]
-        #     name        = df["Name"].iloc[i]
-        #     # account_id  = df["AccountID"].iloc[i]
-        #     uuid_name.append([uuid, name])
+        csv_file        = os.path.join(project_root_folder, "training_set/", process_obj, "txt", "KOL_UUID.csv")
+        df              = pd.read_csv(csv_file, encoding="utf-8")
 
+        print('Training classifier')
+        model           = SVC(kernel='linear', probability=True)
+        model.fit(emb_array, labels)
 
+        class_names     = []
+        for cls in dataset:
+            uuid        = cls.name
+            row_index   = df[df["UUID"]==uuid].index.tolist()[0]
+            name        = df["Name"].iloc[row_index]
+            class_names.append(name)
 
+        with open(classifier_filename_exp, 'wb') as outfile:
+            pickle.dump((model, class_names), outfile)
+        print('Saved classifier model to file "%s"' % classifier_filename_exp)
 
-        # config = configparser.ConfigParser()
-        # config.read("./config.ini")
-        # port = config.get('KOL.dataset', 'path')
-        # KOL_dataset = 
-        # for cls in cleanset:
-        #     output_class_dir = os.path.join(output_dir, cls.name)
-        #     if not os.path.exists(output_class_dir):
-        #         os.makedirs(output_class_dir)  
-        #     count = 0
-        #     for image_path in cls.image_paths:
-        #         count += 1
-        #         filename_base, file_extension = os.path.splitext(image_path)
-        #         clean_image_name = "{}{}".format(cls.name + "_" + str(count).zfill(5), file_extension) 
-        #         clean_image_path = os.path.join(output_class_dir, clean_image_name)
-        #         print("Save clean face: ", str(count).zfill(5), clean_image_path)
-        #         shutil.copy(image_path, clean_image_path)   # 复制文件及权限, Copy data and mode bits
+        with open(align_clean_train_file,'w') as f:    
+            train_status = 'complete'
+            content = align_status + ',' + clean_status + ',' + import_status + ',' + train_status + ',' + unzip_file + ',' + KOL_root_dir
+            f.write(content)
+
+        return render_template(
+            template_name_or_list="train_result.html",
+            param=process_obj
+        )
+
 
 if __name__ == '__main__':
     start_time  = time.time()

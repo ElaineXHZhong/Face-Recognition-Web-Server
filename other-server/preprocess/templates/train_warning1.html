@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Training Warning</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+</head>
+
+<body>
+    <div class="container text-left">
+        <br><br>
+    <h2 align="center">Training Warning</h2>    
+        <br><br>
+    <h4>There must be at least 20 images for each class in the dataset</h4>
+        <br>
+    <h5>The following KOL has not enough image:</h5>
+        <br>
+        <p>
+        {% for name in unqualified_kol %} 
+            <font color="#ff0033" size="3"> {{ name }} </font> <br>
+        {% endfor %}
+        </p>
+        <br>
+    <a href="{{ back_url }}" class="btn btn-outline-dark">Click here to re-upload zip file for training</a>
+        <br><br>
+    <a href="/?output_filename={{param}}" class="btn btn-outline-dark">Back</a>
+    </div>
+</body>
+</html>

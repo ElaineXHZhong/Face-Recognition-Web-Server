@@ -1,5 +1,7 @@
 import os
+import math
 import shutil
+import numpy as np
 import pandas as pd
 
 class ImageClass():
@@ -63,10 +65,34 @@ def get_class_list(dataset):
 def name_to_csv(xlsx_file):
     (path, filename)    = os.path.split(xlsx_file)
     (file, ext)         = os.path.splitext(filename)
-    csv_file            = os.path.join(path, file + ".csv").replace('\\','/')
+    # csv_file            = os.path.join(path, file + ".csv").replace('\\','/')
+    csv_file            = os.path.join(path, "KOL_UUID.csv").replace('\\','/')
     return csv_file
 
 def xlsx_to_csv_pd(xlsx_file):
     data_xls            = pd.read_excel(xlsx_file.replace('\\','/'), index_col=0)
     csv_file            = name_to_csv(xlsx_file.replace('\\','/'))
     data_xls.to_csv(csv_file, encoding='utf-8')
+
+def split_dataset(dataset):
+    train_set           = []
+    test_set            = []
+    for cls in dataset:
+        paths           = cls.image_paths
+        # Remove classes with less than min_nrof_images_per_class
+        min_nrof_images_per_class = 20
+        if len(paths)   >=min_nrof_images_per_class:
+            train_number    = math.ceil(len(paths)*0.8)
+            # test_number     = len(paths) - test_number
+            # np.random.shuffle(paths)
+            train_set.append(ImageClass(cls.name, paths[:train_number]))
+            test_set.append(ImageClass(cls.name, paths[train_number:]))
+    return train_set, test_set
+
+def get_image_paths_and_labels(dataset):
+    image_paths_flat = []
+    labels_flat = []
+    for i in range(len(dataset)):
+        image_paths_flat += dataset[i].image_paths
+        labels_flat += [i] * len(dataset[i].image_paths)
+    return image_paths_flat, labels_flat

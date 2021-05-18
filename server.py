@@ -37,7 +37,7 @@ from utils import (
 
 app                 = Flask(__name__)
 app.secret_key      = os.urandom(24)
-APP_ROOT            = os.path.dirname(os.path.abspath(__file__))
+APP_ROOT            = os.path.dirname(os.path.abspath(__file__)).replace('\\','/')
 # uploads_path        = os.path.join(APP_ROOT, 'static')
 # APP_ROOT = os.path.abspath(os.path.dirname(__file__))
 process_root_folder = os.path.join(APP_ROOT, 'other-server/preprocess/')
@@ -48,7 +48,7 @@ config_file = os.path.join(APP_ROOT, "config.ini")
 config.read(config_file)
 port = config.getint('main.server', 'port')
 config.set('Project', 'root_path', APP_ROOT)
-config.set('KOL.dataset', 'path', os.path.join(APP_ROOT, 'datasets/KOL'))
+config.set('KOL.dataset', 'path', os.path.join(APP_ROOT, 'datasets/KOL').replace('\\','/'))
 with open(config_file, 'w') as f:
     config.write(f)
 
@@ -127,19 +127,23 @@ def train_by_image():
                         )
                     else:
                         un_zip(zip_file)
-                        unzip_file = os.path.join(upload_dir, os.path.splitext(zip_file)[0]) # C:\Kooler\training_set/upload/automation
-                        KOL_root_dir = []
+                        unzip_file      = os.path.join(upload_dir, os.path.splitext(zip_file)[0])
+                        KOL_root_dir    = []
                         for dir in os.listdir(unzip_file):
                             KOL_root_dir.append(dir)
-                        txt_file = os.path.join(training_zip_path, output_filename, "txt")
+                        txt_file        = os.path.join(upload_dir, output_filename, "txt")
                         create(txt_file)
                         align_clean_train_file = os.path.join(txt_file, 'align_clean_import_train.txt')
                         if not os.path.exists(align_clean_train_file):
                             os.makedirs
-                        f = open(align_clean_train_file,'w')
+                        f               = open(align_clean_train_file,'w')
+                        upload_object_dir   = os.path.join(unzip_file, KOL_root_dir[0]).replace('\\','/')
                         align_clean_status = '0,0,0,0,' + str(unzip_file.replace('\\','/')) + ',' + str(KOL_root_dir[0])
-                        f.write(align_clean_status)    
-                        port = config.getint('process.server', 'port')
+                        for file in os.listdir(upload_object_dir):
+                            if os.path.splitext(file)[-1] == ".xlsx" or os.path.splitext(file)[-1] == ".csv":
+                                shutil.move(os.path.join(upload_object_dir, file), txt_file)
+                        f.write(align_clean_status)
+                        port            = config.getint('process.server', 'port')
                         return redirect('http://localhost:' + str(port) + '?output_filename=%s'%(output_filename))    
     else:
         return render_template(

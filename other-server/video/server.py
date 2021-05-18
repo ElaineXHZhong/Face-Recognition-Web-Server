@@ -1,25 +1,31 @@
 #!/usr/bin/env python
-from flask import Flask, render_template, Response, request, redirect
-from waitress import serve
+import os
 import io
 import cv2
-import tensorflow as tf
-import align.detect_face as detect_face
-import facenet.facenet as facenet
-import cv2
 import time
-import numpy as np
 import glob
 import pickle
+import configparser
+import numpy as np
 import collections
-import os
+import tensorflow as tf
+from waitress import serve
+import align.detect_face as detect_face
+import facenet.facenet as facenet
+from flask import Flask, render_template, Response, request, redirect
 # from pytube import YouTube
 import warnings
 warnings.simplefilter(action='ignore', category=FutureWarning)
 
 app = Flask(__name__)
 
-project_root_folder = os.path.abspath(os.path.join(os.getcwd(), "../.."))
+config                      = configparser.ConfigParser()
+video_root_folder           = os.path.abspath(os.path.dirname(__file__))
+# config_file                 = os.path.join(video_root_folder, "config.ini")
+config_file                 = "C:/Kooler/other-server/video/config.ini"
+config.read(config_file)
+port                        = config.getint('video.server', 'port')
+project_root_folder         = config.get('Project', 'root_path')
 classifier_path = os.path.join(project_root_folder, 'models/kol.pkl')
 model_path = os.path.join(project_root_folder, 'models/20180402-114759/')
 with open(classifier_path, 'rb') as infile:
@@ -31,7 +37,10 @@ def index():
     """Video streaming home page."""
     global file_path
     file_path = request.args.get('file_path')
-    return render_template('index.html')
+    back_url = "http://localhost:" + str(config.getint('main.server', 'port')) + '/uploadVideoPage'
+    # return render_template('index.html')
+    return render_template(template_name_or_list='index.html', back_url=back_url)
+
 
 def mean(alist):
     sum = 0
@@ -162,19 +171,25 @@ if __name__ == '__main__':
         graph = tf.get_default_graph()
         os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
         os.environ['CUDA_VISIBLE_DEVICES'] = "0" # 指定使用第一块GPU
-        config                                              =  tf.ConfigProto()
-        config.allow_soft_placement                         = True
-        config.gpu_options.per_process_gpu_memory_fraction  = 0.7
-        config.gpu_options.allow_growth                     = True
-        with tf.Session(config=config) as sess:
+        tf_config                                              =  tf.ConfigProto()
+        tf_config.allow_soft_placement                         = True
+        tf_config.gpu_options.per_process_gpu_memory_fraction  = 0.7
+        tf_config.gpu_options.allow_growth                     = True
+        with tf.Session(config=tf_config) as sess:
             facenet.load_model(model_path)
             pnet, rnet, onet = detect_face.create_mtcnn(sess, project_root_folder + "\\src\\align")
             images_placeholder      = tf.get_default_graph().get_tensor_by_name("input:0")
             embeddings              = tf.get_default_graph().get_tensor_by_name("embeddings:0")
             phase_train_placeholder = tf.get_default_graph().get_tensor_by_name("phase_train:0")
-            print("Server runing at locathost:7000!")
-            spend = time.time() - start_time
-            print(str(spend)+' seconds | ' + str(spend/60) + ' minutes') # 214 seconds | 3.57 minutes
-            serve(app=app, host='0.0.0.0', port=7000)
+            print("Server runing at locathost:%s!" %(port))
+            serve(app=app, host="0.0.0.0", port=port)
+
+
+            # print("Server runing at locathost:7000!")
+            # spend = time.time() - start_time
+            # print(str(spend)+' seconds | ' + str(spend/60) + ' minutes') # 214 seconds | 3.57 minutes
+            # serve(app=app, host='0.0.0.0', port=7000)
+
+
             # serve(app=app, host='0.0.0.0', port=5000, debug=True, threaded=True)
             # app.run(host='0.0.0.0', debug=True, threaded=True)
