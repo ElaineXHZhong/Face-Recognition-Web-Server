@@ -122,6 +122,9 @@ Simply execute the automatic processing by the following order on the web.
 4. {Process Server} /processingProgress
 5. {Process Server} /align
 6. {Process Server} /clean 
+6. {Process Server} /import_clean 
+6. {Process Server} /import_result 
+6. {Process Server} /train_model 
 ```
 **Notice:**
 1. In {Process Server} /clean, the number `if dist < 1.06:` is represented by the horizontal distance between the face, when the face distance is smaller than 1.06 can be regarded as the same person.
