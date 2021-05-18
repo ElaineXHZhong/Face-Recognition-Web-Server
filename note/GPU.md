@@ -3,6 +3,16 @@
 以下两种环境均可:
 - `Visual Studio 2017 + python 3.6.12 + tensorflow-gpu 1.7.0 + CUDA 9.0 + cuDNN 7.0.5 + facenet site-packages`
 - `CUDA 11.0 + tensorflow-gpu 1.14.0`
+- `CUDA 11.0 + tensorflow-gpu 2.4.0`
+    ```markdown
+    - 修改文件:
+        1. facenet/src/align/align_dataset_mtcnn.py
+        2. anaconda3/envs/facenet/lib/python3.6/site-packages/align/detect_face.py
+    - 修改内容: 把所有的 tf. 替换为 tf.compat.v1.  (兼容性处理: tf.compat允许您编写在TensorFlow 1.x和2.x中均可使用的代码)
+
+    - 修改文件: anaconda3/envs/facenet/lib/python3.6/site-packages/align/detect_face.py
+    - 修改内容: 把第194行的 feed_in, dim = (inp, input_shape[-1].value) 替换为 feed_in, dim = (inp, input_shape[-1])
+    ```
 
 ## Prerequisite software
 
