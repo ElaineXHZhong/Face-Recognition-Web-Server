@@ -136,7 +136,8 @@ Simply execute the automatic processing by the following order on the web.
 #### 1. Configure all server
 
 Please edit [`config.ini`](config.ini) which locate in root directory to change the value of shared variable.
-Click [here](note\Config.md) to see how to edit `config.ini` file.
+
+Click [here](note/Config.md) to see how to edit `config.ini` file.
 
 #### 2. Start the Main Server
 Firstly, quickly start the server from the command:
