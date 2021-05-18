@@ -551,9 +551,9 @@ def import_result():
         select_option               = request.values.getlist("select")
         data                        = request.values.getlist("s_option")
         select_content              = []
-        if select_option[0] == "All":
+        if len(select_option) != 0 and select_option[0] == "All":
             select_content.append(same_class_uuid)
-        elif select_option[0] == "None":
+        elif len(select_option) != 0 and select_option[0] == "None":
             select_content.append([])
         else:
             select_content.append(data)
@@ -725,9 +725,24 @@ def train_model():
             content = align_status + ',' + clean_status + ',' + import_status + ',' + train_status + ',' + unzip_file + ',' + KOL_root_dir
             f.write(content)
 
+        class_number    = len(dataset)
+        one_class_image_number = []
+        for i in range(len(dataset)):
+            one_class_image_number.append(len(dataset[i]))
+        image_number    = sum(one_class_image_number)
+        spend           = "%.3f seconds = %.3f minutes = %.3f hrs" %((time.time() - start_time), (time.time() - start_time) / 60, (time.time() - start_time) / 3600)
+        process_efficiency = "%.3f seconds/image" %((time.time() - start_time) / image_number)
+
+        display = []
+        display.append(class_number)
+        display.append(image_number)
+        display.append(spend)
+        display.append(process_efficiency)
+
         return render_template(
             template_name_or_list="train_result.html",
-            param=process_obj
+            param=process_obj,
+            display=display
         )
 
 
