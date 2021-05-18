@@ -2,7 +2,7 @@
 
 <div align="center"><img width="80%" src="pictures/logo.png"/></div>
 
-![](https://img.shields.io/static/v1?label=PRs&message=Welcome&color=brightgreen) ![](https://img.shields.io/static/v1?label=license&message=MIT&color=brightgreen) ![](https://img.shields.io/static/v1?label=build&message=passing&color=brightgreen) ![](https://img.shields.io/badge/language-python-blue) ![](https://img.shields.io/badge/language-HTML-orange) [![](https://img.shields.io/static/v1?label=author&message=ElaineZhong&color=blueviolet)](https://elainexhzhong.github.io/)
+![](https://img.shields.io/static/v1?label=PRs&message=Welcome&color=brightgreen) ![](https://img.shields.io/static/v1?label=license&message=MIT&color=brightgreen) ![](https://img.shields.io/static/v1?label=build&message=passing&color=brightgreen) ![](https://img.shields.io/badge/language-python-blue) ![](https://img.shields.io/badge/framework-Flask-orange) [![](https://img.shields.io/static/v1?label=author&message=ElaineZhong&color=blueviolet)](https://elainexhzhong.github.io/)
 
 ## Face Recognition using Tensorflow
 
