@@ -180,75 +180,24 @@ print(torch.backends.cudnn.version())
 
 ### <span id="33">文件操作</span>
 
-- <a href="#331">文件解压和文件打包</a>
-- <a href="#332">查找、创建删除、下载</a>
-- <a href="#333"></a>
-
-##### <span id="331">文件解压和文件打包</span>
-
 ```bash
-# .tar
-$tar xvf FileName.tar
-$tar cvf FileName.tar DirName
-# .gz
-$gunzip FileName.gz     # or: gzip -d FileName.gz
-$gzip FileName
-# .tar.gz and .tgz
-$tar zxvf FileName.tar.gz
-$tar zcvf FileName.tar.gz DirName
-# .bz2
-$bzip2 -d FileName.bz2  # or: bunzip2 FileName.bz2
-$bzip2 -z FileName
-# .tar.bz2
-$tar jxvf FileName.tar.bz2
-$tar jcvf FileName.tar.bz2 DirName
-# .bz
-$bzip2 -d FileName.bz   # bunzip2 FileName.bz
-# .tar.bz
-$tar jxvf FileName.tar.bz
-# .Z
-$uncompress FileName.Z
-$compress FileName
-# .tar.Z
-$tar Zxvf FileName.tar.Z
-$tar Zcvf FileName.tar.Z DirName
-# .zip
-$unzip FileName.zip
-$zip FileName.zip DirName
-# .rar
-$rar x FileName.rar
-$rar a FileName.rar DirName
-# .lha
-$lha -e FileName.lha
-$lha -a FileName.lha FileName
-# .rpm
-$rpm2cpio FileName.rpm | cpio -div
-# .deb
-$ar p FileName.deb data.tar.gz | tar zxf -
+$unrar e filename.rar ../../All/        # 将 filename.rar 中的所有文件解压到../../All/目录下
+$cp -r filename.rar dir2                # 将filename.rar移动到dir2目录下
+$unzip filename.zip -d ../../All/       # 将 filename.zip 中的所有文件解压出来（-r 表示逐级压缩）
+$unzip $(find . -name "*.zip") -d ../../Test/  # 找到当前目录下所有以".zip"结尾的文件并解压到../../Test/目录下
+
+$find . -name "*.zip"                   # 查找目录下以为".zip"结尾的文件名（.可以换成其他目录的路径）
+$find . -name "*.rar" 
+
+$mkdir Time
+$cd Time                               
+$mkdir 20210511 20210518                # 创建两个文件夹
+
+$mv $(find . -name "*.zip") ../Time/    # 找到当前目录下所有以".zip"结尾的文件并移动到../Time/目录下
+$cd .. && rm -r 20210511                # 删除目录下的20210511文件夹及其子目录
+
+$ls -d */                               # 列出此目录下所有的文件夹名
+$ls -l *.png                            # 列出此目录下所有以".png"结尾的文件名
+$ls -l *.mp4                            # 列出此目录下所有以".mp4"结尾的文件名
 ```
 
-##### <span id="332"></span>
-
-```bash
-# 1. 查找文件
-$find / -name 'tomcat7' -type d         # 查找tomcat7文件夹所在的位置
-$find / -name 'server.xml' -print       # 查找server.xml文件的位置
-$find /tmp/cg/testLinux -name "*.txt"   # 在/testLinux目录下查找以.txt结尾的文件名
-$find . -name "file1*" -a -name "file2*"# 组合查找文件名以file1开头（与、或、非）（-a -o -not !）file2开头的文件
-$find . -type f                         # 根据文件类型进行搜索
-
-# 2. 创建文件
-$touch file1.txt file2.txt file3.txt    # 创建文件
-$mkdir DirName                          # 创建文件夹
-$rm -r DirName                          # 将DirName文件夹及子目录中所有档案删除
-
-# 3. 下载文件
-$wget url
-
-```
-
-##### <span id="333">查找文件</span>
-
-```bash
-
-```
