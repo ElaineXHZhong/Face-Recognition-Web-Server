@@ -3,6 +3,7 @@
 - <a href="#1">通过VSCode远程连接Linux服务器</a>
 - <a href="#2">通过VSCode远程连接Windows服务器</a>
 - <a href="#3">Linux服务器常规操作</a>
+- <a href="#4">Windows服务器常规操作</a>
 
 ## <span id="1">通过VSCode远程连接Linux服务器</span>
 
@@ -199,5 +200,17 @@ $cd .. && rm -r 20210511                # 删除目录下的20210511文件夹及
 $ls -d */                               # 列出此目录下所有的文件夹名
 $ls -l *.png                            # 列出此目录下所有以".png"结尾的文件名
 $ls -l *.mp4                            # 列出此目录下所有以".mp4"结尾的文件名
+```
+
+## <span id="4">Windows服务器常规操作</span>
+
+```bash
+$mkdir Datasets                         # 创建Datasets文件夹
+
+$cd ~/Downloads
+$xcopy dir E:/Elaine/KOL/Datasets /e    # 复制文件夹到E:/Elaine/KOL/Datasets
+$copy dir E:/Elaine/KOL/Datasets        # 复制文件到E:/Elaine/KOL/Datasets
+
+$powershell (new-object Net.WebClient).DownloadFile('https://www.7-zip.org/a/7z1900-x64.exe','E:\Elaine\KOL\Software\7z.exe') # 利用powershell根据url下载文件并保存为7z.exe
 ```
 
