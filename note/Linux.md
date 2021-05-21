@@ -114,7 +114,6 @@ $ssh user@domain@hostname   # Or for Windows when using a domain / AAD account
 ```bash
 $cat /proc/version              # 查看Linux内核版本命令
 $uname -a                       # 查看Linux内核版本命令
-
 $lsb_release -a                 # 查看Linux系统版本的命令: Ubuntu 20.04.1 LTS
 $cat /etc/issue
 
