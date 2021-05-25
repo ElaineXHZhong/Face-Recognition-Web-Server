@@ -106,8 +106,9 @@ $ssh user@domain@hostname   # Or for Windows when using a domain / AAD account
 ## <span id="3">Linux服务器常规操作</span>
 
 - <a href="#31">查看系统信息</a>
-- <a href="#32">查看GPU信息</a>
-- <a href="#33">文件操作</a>
+- <a href="#32">查看CPU信息</a>
+- <a href="#33">查看GPU信息</a>
+- <a href="#34">文件操作</a>
 
 ### <span id="31">查看系统信息</span>
 
@@ -126,7 +127,62 @@ $source /etc/profile
 $cd ~                           # 用户的主目录: /home/name
 ```
 
-### <span id="32">查看GPU信息</span>
+### <span id="32">查看CPU信息</span>
+
+```bash
+$top -bn 1 -i -c    # 查看总体的系统运行状态和cpu使用效率
+%us: 表示用户空间程序的cpu使用效率
+%sy:表示系统空间程序的cpu使用效率
+%ni: 表示用户空间通过nice调度过的程序的cpu使用效率
+%id: 空闲cpu
+%wa:cpu运行时等待io的时间
+%hi: cpu运行过程中硬中断的数量
+%si: cpu处理软中断的数量
+%st: 被虚拟机偷走的cpu
+
+top - 10:53:41 up 28 days, 22:41,  0 users,  load average: 1.09, 1.24, 1.06
+Tasks: 701 total,   3 running, 698 sleeping,   0 stopped,   0 zombie
+%Cpu(s):  4.0 us,  0.9 sy,  0.0 ni, 95.1 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+MiB Mem : 257400.6 total,  35353.0 free,  11449.8 used, 210597.8 buff/cache
+MiB Swap:   8192.0 total,   8191.7 free,      0.3 used. 244013.8 avail Mem 
+
+    PID USER      PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND
+ 599003 root      20   0  129448  30940  10640 R 100.0   0.0   0:00.25 python ./fate_flow/fate_flow_server.py
+ 579433 kh        20   0 9946812 842652 152796 R 100.0   0.3  13:52.48 python align.py /home/kh/Elaine/Datasets/All
+   2486 root      20   0       0      0      0 S   5.9   0.0 819:09.75 [nv_queue]
+  35846 kh        20   0  591348  60232  44908 S   5.9   0.0   1:49.81 /usr/libexec/gnome-terminal-server
+ 599004 kh        20   0   13052   4428   3304 R   5.9   0.0   0:00.03 top -bn 1 -i -c
+
+$vmstat 1 2         # 每秒采集一次cpu使用率，采集2次
+procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----
+ r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa st
+ 3  0    268 37338696 2162352 212614464    0    0     0     4    0    0  1  0 99  0  0
+
+$sudo apt install dstat
+$dstat              # 每秒cpu使用率情况获取 | 最占cpu的进程获取
+--total-cpu-usage-- -dsk/total- -net/total- ---paging-- ---system--
+usr sys idl wai stl| read  writ| recv  send|  in   out | int   csw 
+  1   0  99   0   0|7449B  202k|   0     0 |   0     0 |1961  7704 
+  2   0  98   0   0|   0   980k|1009B 2033B|   0     0 |3879  7895 
+  2   0  97   0   0|   0   836k| 999B 1682B|   0     0 |2539  5620 
+  2   0  98   0   0|   0   992k| 346B  480B|   0     0 |2669  5268 
+  2   0  97   0   0|   0   868k| 902B 1389B|   0     0 |2812  6473
+
+$free -m
+              total        used        free      shared  buff/cache   available
+Mem:         257400       11356       35596         137      210448      244109
+Swap:          8191           0        8191
+
+$dstat --top-cpu    # 最占cpu的进程获取
+-most-expensive-
+  cpu process   
+nv_queue     0.1
+python       2.1
+python       2.1
+
+```
+
+### <span id="33">查看GPU信息</span>
 
 ```bash
 $sudo apt update                # 更新软件源
@@ -178,7 +234,7 @@ print(torch.version.cuda)
 print(torch.backends.cudnn.version())
 ```
 
-### <span id="33">文件操作</span>
+### <span id="34">文件操作</span>
 
 ```bash
 $unrar e filename.rar ../../All/        # 将 filename.rar 中的所有文件解压到../../All/目录下
