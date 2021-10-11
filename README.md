@@ -168,3 +168,19 @@ $ python server.py
 1. The conda environment to run server.py must be the one in which the .pkl model is trained.
 2. Before run the server, copy folder datasets and models which contains 20180402-114759 to the root directory.
 3. In order to display image properly on HTML page, the path of the image needs to be relative path to the root directory for each project (mian or sub).
+
+## Maintainers
+
+[@ElaineZhong](https://github.com/ElaineXHZhong)
+
+## Contribute
+
+Contributions are always welcome! Feel free to dive in! 
+
+Please read the [contribution guideline](https://github.com/github/docs/blob/main/CONTRIBUTING.md) first, then [open an issue](https://github.com/ElaineXHZhong/Face-Recognition-Web-Server/issues/new) open an issue</a> or submit PRs.
+
+This repository follows the [Contributor Covenant](http://contributor-covenant.org/version/1/3/0/) Code of Conduct.
+
+## License
+
+[MIT](LICENSE) © Elaine Zhong
