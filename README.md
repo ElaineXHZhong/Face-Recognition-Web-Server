@@ -184,3 +184,30 @@ This repository follows the [Contributor Covenant](http://contributor-covenant.o
 ## License
 
 [MIT](LICENSE) © Elaine Zhong
+
+
+
+
+
+## Maintainers
+
+[@ElaineZhong](https://github.com/ElaineXHZhong)
+
+## Contribute
+
+Contributions are always welcome! Feel free to dive in! 
+
+Please read the [contribution guideline](https://github.com/github/docs/blob/main/CONTRIBUTING.md) first, then [open an issue](https://github.com/ElaineXHZhong/Content-Sentiment-Analysis/issues/new) open an issue</a> or submit PRs.
+
+This repository follows the [Contributor Covenant](http://contributor-covenant.org/version/1/3/0/) Code of Conduct.
+
+
+### Contributors
+
+This project exists thanks to all the people who contribute. 
+
+<img src="pictures/portrait.png" width="10%" height="10%" href="https://elainexhzhong.github.io/">
+
+## License
+
+[MIT](LICENSE) © Elaine Zhong
