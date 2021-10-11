@@ -14,12 +14,12 @@ The code is tested using tensorflow 1.7 (CPU mode) or tensorflow-gpu 1.7 (GPU mo
 
 You can create the Anaconda Environment of this project by the following commands:
 ```bash
-$conda create -n facenet python=3.6 && conda activate facenet
-$cd facenet
-$pip install -r requirements.txt
-$pip uninstall -y tensorflow
-$pip install tensorflow-gpu==1.7.0
-$pip install xlrd==1.2.0
+$ conda create -n facenet python=3.6 && conda activate facenet
+$ cd facenet
+$ pip install -r requirements.txt
+$ pip uninstall -y tensorflow
+$ pip install tensorflow-gpu==1.7.0
+$ pip install xlrd==1.2.0
 ```
 
 Some packages require a specific version for the program to work properly:   ![](https://img.shields.io/badge/numpy-1.16.2-brightgreen) ![](https://img.shields.io/badge/scipy-1.2.1-brightgreen)
@@ -70,15 +70,15 @@ Facenet's standard operating procedures and some automation procedures need to b
 
 Install FFmpeg
 ```bash
-$python src/crop.py C:/Users/PC/Desktop/kol_video C:/Users/PC/Desktop/kol_crop
+$ python src/crop.py C:/Users/PC/Desktop/kol_video C:/Users/PC/Desktop/kol_crop
 ```
 
 ##### 2. Detect, extract and align face images
 
 Copy all files (det1.npy, det2.npy, det3.npy) under `src/align/` from facenet to folder `src/align/` except `align_dataset_mtcnn.py` and `detect_face.py`.
 ```bash
-$python src/align/align_dataset_mtcnn.py datasets/kol_crop datasets/kol_160 --image_size 160 --margin 32
-$python src/align/align_dataset_mtcnn.py datasets/kol_crop datasets/kol_160 --image_size 160 --margin 32 --gpu_memory_fraction 0.5 # If there is not enough memory in the GPU
+$ python src/align/align_dataset_mtcnn.py datasets/kol_crop datasets/kol_160 --image_size 160 --margin 32
+$ python src/align/align_dataset_mtcnn.py datasets/kol_crop datasets/kol_160 --image_size 160 --margin 32 --gpu_memory_fraction 0.5 # If there is not enough memory in the GPU
 ```
 
 ##### 3. Manually clean the data set
@@ -88,25 +88,25 @@ Manually clean data set kol_160: in each subfolder, pictures that are not belong
 ##### 4. Train model with face thumbnails
 
 ```bash
-$python src/classifier.py TRAIN datasets/kol_160 models/20180402-114759/20180402-114759.pb models/kol.pkl
+$ python src/classifier.py TRAIN datasets/kol_160 models/20180402-114759/20180402-114759.pb models/kol.pkl
 ```
 
 ##### 5. Validate model with face thumbnails
 
 ```bash
-$python src/classifier.py CLASSIFY datasets/kol_160 models/20180402-114759/20180402-114759.pb models/kol.pkl
+$ python src/classifier.py CLASSIFY datasets/kol_160 models/20180402-114759/20180402-114759.pb models/kol.pkl
 ```
 
 ##### 6. Predict KOL identity
 ```bash
-$python src/predict.py datasets/kol_160/01/01_0001.jpg models/20180402-114759 models/kol.pkl
-$python src/predict.py datasets/kol_160/01/01_0001.jpg models/20180402-114759 models/kol.pkl --gpu_memory_fraction 0.5 # If there is not enough memory in the GPU
+$ python src/predict.py datasets/kol_160/01/01_0001.jpg models/20180402-114759 models/kol.pkl
+$ python src/predict.py datasets/kol_160/01/01_0001.jpg models/20180402-114759 models/kol.pkl --gpu_memory_fraction 0.5 # If there is not enough memory in the GPU
 ```
 
 ##### 7. Predict Video identity
 ```bash
-$python src/classifier.py TRAIN datasets/training_data_aligned models/20180402-114759/20180402-114759.pb models/newglint_classifier.pkl
-$python src/video_recognize.py
+$ python src/classifier.py TRAIN datasets/training_data_aligned models/20180402-114759/20180402-114759.pb models/newglint_classifier.pkl
+$ python src/video_recognize.py
 ```
 
 ### Automatic processing
@@ -142,8 +142,8 @@ Click [here](note/Config.md) to see how to edit `config.ini` file.
 #### 2. Start the Main Server
 Firstly, quickly start the server from the command:
 ```bash
-$conda activate facenet
-$python server.py
+$ conda activate facenet
+$ python server.py
 ```
 Secondly, open web browser: `http://127.0.0.1:{main.server.port}` (detail in `config.ini`)
 
@@ -151,16 +151,16 @@ Secondly, open web browser: `http://127.0.0.1:{main.server.port}` (detail in `co
 Copy all files (det1.npy, det2.npy, det3.npy) under `src/align/` from facenet to folder `other-server/process/align` except `align_dataset_mtcnn.py` and `detect_face.py`.
 
 ```bash
-$cd other-server/process
-$python server.py
+$ cd other-server/process
+$ python server.py
 ```
 
 #### 4. Start the Video Server
 Copy all files (det1.npy, det2.npy, det3.npy) under `src/align/` from facenet to folder `other-server/video/align` except `align_dataset_mtcnn.py` and `detect_face.py`.
 
 ```bash
-$cd other-server/video
-$python server.py
+$ cd other-server/video
+$ python server.py
 # you can compare app.py and server.py to obvserve the server performance
 ```
 

@@ -24,13 +24,13 @@
 
 设置好git以准备更新github库
 ```bash
-$ssh-keygen -t rsa -C "ElaineZhongXH@gmail.com" #将‪C:\Users\ACS1\.ssh\id_rsa.pub的内容复制到github的ssh key
-$git config --global user.email "ElaineZhongXH@gmail.com"
-$git config --global user.name "ElaineXHZhong"
+$ ssh-keygen -t rsa -C "ElaineZhongXH@gmail.com" #将‪C:\Users\ACS1\.ssh\id_rsa.pub的内容复制到github的ssh key
+$ git config --global user.email "ElaineZhongXH@gmail.com"
+$ git config --global user.name "ElaineXHZhong"
 # 常规步骤更新github库
-$git add .
-$git commit -m 'xxx'
-$git push -u origin main
+$ git add .
+$ git commit -m 'xxx'
+$ git push -u origin main
 ```
 
 ## Configure GPU Environment on Azure GPU VM
@@ -53,13 +53,13 @@ $git push -u origin main
 - 测试程序
     ```bash
     # (1) Align
-    $python src/align/align_dataset_mtcnn.py datasets/lfw datasets/lfw_160 --image_size 160 --margin 32 
+    $ python src/align/align_dataset_mtcnn.py datasets/lfw datasets/lfw_160 --image_size 160 --margin 32 
     # (2) Train
-    $python src/classifier.py TRAIN datasets/lfw_160 models/20180402-114759/20180402-114759.pb models/lfw.pkl
+    $ python src/classifier.py TRAIN datasets/lfw_160 models/20180402-114759/20180402-114759.pb models/lfw.pkl
     # (3) Classify
-    $python src/classifier.py CLASSIFY datasets/lfw_160 models/20180402-114759/20180402-114759.pb models/lfw.pkl
+    $ python src/classifier.py CLASSIFY datasets/lfw_160 models/20180402-114759/20180402-114759.pb models/lfw.pkl
     # (4) Predict
-    $python contributed/predict.py datasets/lfw/Aaron_Eckhart/Aaron_Eckhart_0001.jpg models/20180402-114759 models/lfw.pk
+    $ python contributed/predict.py datasets/lfw/Aaron_Eckhart/Aaron_Eckhart_0001.jpg models/20180402-114759 models/lfw.pk
     ```
 
 
@@ -77,7 +77,7 @@ Visual Studio 2017 + python 3.6.12 + tensorflow-gpu 1.7.0 + CUDA 9.0 + cuDNN 7.0
     ```bash
     # 把cuDNN下的bin,include,lib文件夹拷贝到CUDA的安装路径: C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v9.0
     # 要安的tensoflow版本不一样，所对应的CUDA 和cuDNN版本也就不一样 (一定要对应上，否则会报错)
-    $nvcc -V   # 检查CUDA是否安装成功
+    $ nvcc -V   # 检查CUDA是否安装成功
     ```
 5. 环境变量
     - 添加系统环境:
@@ -106,21 +106,21 @@ Visual Studio 2017 + python 3.6.12 + tensorflow-gpu 1.7.0 + CUDA 9.0 + cuDNN 7.0
         ```
     - 检查Anaconda是否安装成功
         ```bash
-        $conda -V
+        $ conda -V
         ```
 7. install tensorflow-gpu 1.7.0
     ```bash
-    $conda create -n facenet python=3.6 && conda activate facenet
-    $cd facenet
-    $pip install -r requirements.txt
-    $pip uninstall -y tensorflow
-    $pip install tensorflow-gpu==1.7.0
+    $ conda create -n facenet python=3.6 && conda activate facenet
+    $ cd facenet
+    $ pip install -r requirements.txt
+    $ pip uninstall -y tensorflow
+    $ pip install tensorflow-gpu==1.7.0
     ```
 8. 配置site-packages下的facenet和align模块
     - 找到site-packages路径
         ```bash
-        $conda activate facenet
-        $where python # C:\Users\PC\.conda\envs\facenet\python.exe
+        $ conda activate facenet
+        $ where python # C:\Users\PC\.conda\envs\facenet\python.exe
         # site-packages就在C:\Users\PC\.conda\envs\facenet\Lib\site-packages
         ```
     - facenet模块
@@ -146,10 +146,10 @@ Visual Studio 2017 + python 3.6.12 + tensorflow-gpu 1.7.0 + CUDA 9.0 + cuDNN 7.0
         ```
 11. 调整包版本
     ```bash
-    $pip install numpy==1.16.2
-    $pip install scipy==1.2.1
+    $ pip install numpy==1.16.2
+    $ pip install scipy==1.2.1
     # 后面启动server的时候还需要额外安装以下包
-    $pip install pypinyin waitress imutils flask pillow
+    $ pip install pypinyin waitress imutils flask pillow
     # numpy如果不是指定版本，需要修改代码: numpy\lib\npyio.py: allow_pickle=False -> allow_pickle=True
     ```
 12. 保持一致
@@ -167,18 +167,18 @@ Visual Studio 2017 + python 3.6.12 + tensorflow-gpu 1.7.0 + CUDA 9.0 + cuDNN 7.0
     - 下载[lfw](http://vis-www.cs.umass.edu/lfw/)作测试
     ```bash
     # 1. Align
-    $python src/align/align_dataset_mtcnn.py datasets/lfw datasets/lfw_160 --image_size 160 --margin 32 # sufficient GPU memory
-    $python src/align/align_dataset_mtcnn.py datasets/lfw datasets/lfw_160 --image_size 160 --margin 32 --gpu_memory_fraction 0.5 # insufficient GPU memory强劲
+    $ python src/align/align_dataset_mtcnn.py datasets/lfw datasets/lfw_160 --image_size 160 --margin 32 # sufficient GPU memory
+    $ python src/align/align_dataset_mtcnn.py datasets/lfw datasets/lfw_160 --image_size 160 --margin 32 --gpu_memory_fraction 0.5 # insufficient GPU memory强劲
 
     # 2. Train
-    $python src/classifier.py TRAIN datasets/lfw_160 models/20180402-114759/20180402-114759.pb models/lfw.pkl
+    $ python src/classifier.py TRAIN datasets/lfw_160 models/20180402-114759/20180402-114759.pb models/lfw.pkl
 
     # 3. Classify
-    $python src/classifier.py CLASSIFY datasets/lfw_160 models/20180402-114759/20180402-114759.pb models/lfw.pkl
+    $ python src/classifier.py CLASSIFY datasets/lfw_160 models/20180402-114759/20180402-114759.pb models/lfw.pkl
 
     # 4. Predict
-    $python contributed/predict.py datasets/lfw/Aaron_Eckhart/Aaron_Eckhart_0001.jpg models/20180402-114759 models/lfw.pkl # sufficient GPU memory
-    $python contributed/predict.py datasets/lfw/Aaron_Eckhart/Aaron_Eckhart_0001.jpg models/20180402-114759 models/lfw.pkl --gpu_memory_fraction 0.5 # sufficient GPU memory
+    $ python contributed/predict.py datasets/lfw/Aaron_Eckhart/Aaron_Eckhart_0001.jpg models/20180402-114759 models/lfw.pkl # sufficient GPU memory
+    $ python contributed/predict.py datasets/lfw/Aaron_Eckhart/Aaron_Eckhart_0001.jpg models/20180402-114759 models/lfw.pkl --gpu_memory_fraction 0.5 # sufficient GPU memory
     ```
 14. 如果需要查看时间
     ```python

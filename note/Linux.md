@@ -12,12 +12,12 @@
 Windows10下检查是否已经安装OpenSSH:
 ```bash
 # Win + X -> 选择Windows PoweShell（管理员）
-$Get-WindowsCapability -Online | ? Name -like 'OpenSSH*'
+$ Get-WindowsCapability -Online | ? Name -like 'OpenSSH*'
 # 如果电脑未安装OpenSSH，则State会显示NotPresent | 安装了则是Installed
-$Add-WindowsCapability -Online -Name OpenSSH.Client~~~~0.0.1.0
+$ Add-WindowsCapability -Online -Name OpenSSH.Client~~~~0.0.1.0
 
 # Win+R输入cmd进入终端
-$ssh
+$ ssh
 ```
 
 **2. 本机安装Remote-SSH**
@@ -66,11 +66,11 @@ Host elaine # 随意机器名
 
 在搜索框中搜索powershell，单击“以管理员身份运行”，然后运行以下命令来启动 SSHD 服务：
 ```bash
-$Start-Service sshd                                 # OPTIONAL but recommended:
-$Set-Service -Name sshd -StartupType 'Automatic'    # Confirm the Firewall rule is configured. It should be created automatically by setup. 
-$Get-NetFirewallRule -Name *ssh*                    # There should be a firewall rule named "OpenSSH-Server-In-TCP", which should be enabled
+$ Start-Service sshd                                 # OPTIONAL but recommended:
+$ Set-Service -Name sshd -StartupType 'Automatic'    # Confirm the Firewall rule is configured. It should be created automatically by setup. 
+$ Get-NetFirewallRule -Name *ssh*                    # There should be a firewall rule named "OpenSSH-Server-In-TCP", which should be enabled
 # If the firewall does not exist, create one
-$New-NetFirewallRule -Name sshd -DisplayName 'OpenSSH Server (sshd)' -Enabled True -Direction Inbound -Protocol TCP -Action Allow -LocalPort 22 
+$ New-NetFirewallRule -Name sshd -DisplayName 'OpenSSH Server (sshd)' -Enabled True -Direction Inbound -Protocol TCP -Action Allow -LocalPort 22 
 ```
 找到Windows服务器的的username: C:\Users\username的username(`AstriACS`)
 
@@ -79,8 +79,8 @@ $New-NetFirewallRule -Name sshd -DisplayName 'OpenSSH Server (sshd)' -Enabled Tr
 **1. 启动PowerShell测试ssh连接**
 
 ```bash
-# $Ssh username@servername    # <username> 是服务器 <server> 上的用户账号
-$Ssh AstriACS@10.6.36.230
+# $ Ssh username@servername    # <username> 是服务器 <server> 上的用户账号
+$ Ssh AstriACS@10.6.36.230
 # 到任何服务器的第一个连接都将生成类似以下内容的消息
 The authenticity of host servername (10.00.00.001) cant be established.
 ECDSA key fingerprint is SHA256:(<a large string>).
@@ -97,8 +97,8 @@ To connect to a remote host for the first time, follow these steps:
 Verify you can connect to the SSH host by running the following command from a terminal / PowerShell window replacing user@hostname as appropriate.
 
 ```bash
-$ssh user@hostname          # for Linux Server
-$ssh user@domain@hostname   # Or for Windows when using a domain / AAD account 
+$ ssh user@hostname          # for Linux Server
+$ ssh user@domain@hostname   # Or for Windows when using a domain / AAD account 
 ```
 
 打开vscode，打开Command Palette (F1/ctrl+shift+P) ，输入”Remote-SSH: Connect to Host…” 并选中，选择”+ Add New SSH Host…”，and use the same user@hostname as above，选择服务器的平台，并输入密码，可以正常使用了！
@@ -113,24 +113,24 @@ $ssh user@domain@hostname   # Or for Windows when using a domain / AAD account
 ### <span id="31">查看系统信息</span>
 
 ```bash
-$cat /proc/version              # 查看Linux内核版本命令
-$uname -a                       # 查看Linux内核版本命令
-$lsb_release -a                 # 查看Linux系统版本的命令: Ubuntu 20.04.1 LTS
-$cat /etc/issue
+$ cat /proc/version              # 查看Linux内核版本命令
+$ uname -a                       # 查看Linux内核版本命令
+$ lsb_release -a                 # 查看Linux系统版本的命令: Ubuntu 20.04.1 LTS
+$ cat /etc/issue
 
-$echo $PATH                     # 查看PATH环境变量
-$vim /etc/profile               # 添加PATH环境变量
-# 在文档最后，添加: export PATH="/opt/xxx/bin:$PATH"
+$ echo $ PATH                     # 查看PATH环境变量
+$ vim /etc/profile               # 添加PATH环境变量
+# 在文档最后，添加: export PATH="/opt/xxx/bin:$ PATH"
 # 保存，退出: Esc : wq
-$source /etc/profile
+$ source /etc/profile
 
-$cd ~                           # 用户的主目录: /home/name
+$ cd ~                           # 用户的主目录: /home/name
 ```
 
 ### <span id="32">查看CPU信息</span>
 
 ```bash
-$top -bn 1 -i -c    # 查看总体的系统运行状态和cpu使用效率
+$ top -bn 1 -i -c    # 查看总体的系统运行状态和cpu使用效率
 %us: 表示用户空间程序的cpu使用效率
 %sy:表示系统空间程序的cpu使用效率
 %ni: 表示用户空间通过nice调度过的程序的cpu使用效率
@@ -153,13 +153,13 @@ MiB Swap:   8192.0 total,   8191.7 free,      0.3 used. 244013.8 avail Mem
   35846 kh        20   0  591348  60232  44908 S   5.9   0.0   1:49.81 /usr/libexec/gnome-terminal-server
  599004 kh        20   0   13052   4428   3304 R   5.9   0.0   0:00.03 top -bn 1 -i -c
 
-$vmstat 1 2         # 每秒采集一次cpu使用率，采集2次
+$ vmstat 1 2         # 每秒采集一次cpu使用率，采集2次
 procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----
  r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa st
  3  0    268 37338696 2162352 212614464    0    0     0     4    0    0  1  0 99  0  0
 
-$sudo apt install dstat
-$dstat              # 每秒cpu使用率情况获取 | 最占cpu的进程获取
+$ sudo apt install dstat
+$ dstat              # 每秒cpu使用率情况获取 | 最占cpu的进程获取
 --total-cpu-usage-- -dsk/total- -net/total- ---paging-- ---system--
 usr sys idl wai stl| read  writ| recv  send|  in   out | int   csw 
   1   0  99   0   0|7449B  202k|   0     0 |   0     0 |1961  7704 
@@ -168,12 +168,12 @@ usr sys idl wai stl| read  writ| recv  send|  in   out | int   csw
   2   0  98   0   0|   0   992k| 346B  480B|   0     0 |2669  5268 
   2   0  97   0   0|   0   868k| 902B 1389B|   0     0 |2812  6473
 
-$free -m
+$ free -m
               total        used        free      shared  buff/cache   available
 Mem:         257400       11356       35596         137      210448      244109
 Swap:          8191           0        8191
 
-$dstat --top-cpu    # 最占cpu的进程获取
+$ dstat --top-cpu    # 最占cpu的进程获取
 -most-expensive-
   cpu process   
 nv_queue     0.1
@@ -185,38 +185,38 @@ python       2.1
 ### <span id="33">查看GPU信息</span>
 
 ```bash
-$sudo apt update                # 更新软件源
-$sudo apt upgrade               # 升级软件包
-$nvidia-smi                     # 查看支持的cuda版本, 如果无法查看，则说明尚未安装nvidia驱动
+$ sudo apt update                # 更新软件源
+$ sudo apt upgrade               # 升级软件包
+$ nvidia-smi                     # 查看支持的cuda版本, 如果无法查看，则说明尚未安装nvidia驱动
 
-$uname -a                       # 查到Linux的架构是x86_64
-$nvcc -V                        # 查看系统当前安装的CUDA的版本: Build cuda_11.0_bu.TC445_37.28540450_0
-$cat /usr/local/cuda/version.txt # 如果nvcc没有安装，去安装目录下查看
-$cat /usr/local/cuda/include/cudnn.h | grep CUDNN_MAJOR -A 2 # 查看 cuDNN 版本
+$ uname -a                       # 查到Linux的架构是x86_64
+$ nvcc -V                        # 查看系统当前安装的CUDA的版本: Build cuda_11.0_bu.TC445_37.28540450_0
+$ cat /usr/local/cuda/version.txt # 如果nvcc没有安装，去安装目录下查看
+$ cat /usr/local/cuda/include/cudnn.h | grep CUDNN_MAJOR -A 2 # 查看 cuDNN 版本
 
-$lspci | grep -i nvidia         # 查看NVIDIA GPU显卡信息
+$ lspci | grep -i nvidia         # 查看NVIDIA GPU显卡信息
 3b:00.0 3D controller: NVIDIA Corporation GV100GL [Tesla V100 PCIe 32GB] (rev a1)
 af:00.0 3D controller: NVIDIA Corporation GV100GL [Tesla V100 PCIe 32GB] (rev a1)
 d8:00.0 3D controller: NVIDIA Corporation GV100GL [Tesla V100 PCIe 32GB] (rev a1)
 序号 3b:00.0, af:00.0, d8:00.0 是显卡的代号
 
-$lspci -v -s 3b:00.0            # 查看指定显卡的详细信息
-$nvidia-smi                     # 查看NVIDIA GPU显卡使用情况
-$watch -n 10 nvidia-smi         # 周期性的输出显卡的使用情况, -n后边跟的是执行命令的周期，以s为单位
-$sudo lshw -c video             # 查看显卡驱动
+$ lspci -v -s 3b:00.0            # 查看指定显卡的详细信息
+$ nvidia-smi                     # 查看NVIDIA GPU显卡使用情况
+$ watch -n 10 nvidia-smi         # 周期性的输出显卡的使用情况, -n后边跟的是执行命令的周期，以s为单位
+$ sudo lshw -c video             # 查看显卡驱动
 configuration: driver=nvidia latency=0
 
-$apt search nvidia-cuda-toolkit # 查询目前可安装的CUDA Toolkit版本
+$ apt search nvidia-cuda-toolkit # 查询目前可安装的CUDA Toolkit版本
 ```
 
 ```bash
 # 运行facenet相关代码
 
 # 选择1: 不用修改facenet代码 (CUDA 11.0 + tensorflow-gpu 1.14.0)
-$pip install tensorflow-gpu==1.14.0 
+$ pip install tensorflow-gpu==1.14.0 
 
 # 选择2: 修改facenet代码     (CUDA 11.0 + tensorflow-gpu 2.4.0)
-$pip install tensorflow-gpu==2.14.0  
+$ pip install tensorflow-gpu==2.14.0  
 # - 修改文件:
 #     1. facenet/src/align/align_dataset_mtcnn.py
 #     2. anaconda3/envs/facenet/lib/python3.6/site-packages/align/detect_face.py
@@ -237,37 +237,37 @@ print(torch.backends.cudnn.version())
 ### <span id="34">文件操作</span>
 
 ```bash
-$unrar e filename.rar ../../All/        # 将 filename.rar 中的所有文件解压到../../All/目录下
-$cp -r filename.rar dir2                # 将filename.rar移动到dir2目录下
-$unzip filename.zip -d ../../All/       # 将 filename.zip 中的所有文件解压出来（-r 表示逐级压缩）
-$unzip $(find . -name "*.zip") -d ../../Test/  # 找到当前目录下所有以".zip"结尾的文件并解压到../../Test/目录下
+$ unrar e filename.rar ../../All/        # 将 filename.rar 中的所有文件解压到../../All/目录下
+$ cp -r filename.rar dir2                # 将filename.rar移动到dir2目录下
+$ unzip filename.zip -d ../../All/       # 将 filename.zip 中的所有文件解压出来（-r 表示逐级压缩）
+$ unzip $ (find . -name "*.zip") -d ../../Test/  # 找到当前目录下所有以".zip"结尾的文件并解压到../../Test/目录下
 
-$find . -name "*.zip"                   # 查找目录下以为".zip"结尾的文件名（.可以换成其他目录的路径）
-$find . -name "*.rar" 
+$ find . -name "*.zip"                   # 查找目录下以为".zip"结尾的文件名（.可以换成其他目录的路径）
+$ find . -name "*.rar" 
 
-$mkdir Time
-$cd Time                               
-$mkdir 20210511 20210518                # 创建两个文件夹
+$ mkdir Time
+$ cd Time                               
+$ mkdir 20210511 20210518                # 创建两个文件夹
 
-$mv $(find . -name "*.zip") ../Time/    # 找到当前目录下所有以".zip"结尾的文件并移动到../Time/目录下
-$cd .. && rm -r 20210511                # 删除目录下的20210511文件夹及其子目录
+$ mv $ (find . -name "*.zip") ../Time/   # 找到当前目录下所有以".zip"结尾的文件并移动到../Time/目录下
+$ cd .. && rm -r 20210511                # 删除目录下的20210511文件夹及其子目录
 
-$ls -d */                               # 列出此目录下所有的文件夹名
-$ls -l *.png                            # 列出此目录下所有以".png"结尾的文件名
-$ls -l *.mp4                            # 列出此目录下所有以".mp4"结尾的文件名
+$ ls -d */                               # 列出此目录下所有的文件夹名
+$ ls -l *.png                            # 列出此目录下所有以".png"结尾的文件名
+$ ls -l *.mp4                            # 列出此目录下所有以".mp4"结尾的文件名
 
-$wget url                               # 从指定的URL下载文件
+$ wget url                               # 从指定的URL下载文件
 ```
 
 ## <span id="4">Windows服务器常规操作</span>
 
 ```bash
-$mkdir Datasets                         # 创建Datasets文件夹
+$ mkdir Datasets                         # 创建Datasets文件夹
 
-$cd ~/Downloads
-$xcopy dir E:/Elaine/KOL/Datasets /e    # 复制文件夹到E:/Elaine/KOL/Datasets
-$copy dir E:/Elaine/KOL/Datasets        # 复制文件到E:/Elaine/KOL/Datasets
+$ cd ~/Downloads
+$ xcopy dir E:/Elaine/KOL/Datasets /e    # 复制文件夹到E:/Elaine/KOL/Datasets
+$ copy dir E:/Elaine/KOL/Datasets        # 复制文件到E:/Elaine/KOL/Datasets
 
-$powershell (new-object Net.WebClient).DownloadFile('https://www.7-zip.org/a/7z1900-x64.exe','E:\Elaine\KOL\Software\7z.exe') # 利用powershell根据url下载文件并保存为7z.exe
+$ powershell (new-object Net.WebClient).DownloadFile('https://www.7-zip.org/a/7z1900-x64.exe','E:\Elaine\KOL\Software\7z.exe') # 利用powershell根据url下载文件并保存为7z.exe
 ```
 
