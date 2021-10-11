@@ -72,7 +72,7 @@ $ Get-NetFirewallRule -Name *ssh*                    # There should be a firewal
 # If the firewall does not exist, create one
 $ New-NetFirewallRule -Name sshd -DisplayName 'OpenSSH Server (sshd)' -Enabled True -Direction Inbound -Protocol TCP -Action Allow -LocalPort 22 
 ```
-找到Windows服务器的的username: C:\Users\username的username(`AstriACS`)
+找到Windows服务器的的username: C:\Users\username的username(`Anna`)
 
 ### <span id="22">配置本机</span>
 
@@ -80,7 +80,7 @@ $ New-NetFirewallRule -Name sshd -DisplayName 'OpenSSH Server (sshd)' -Enabled T
 
 ```bash
 # $ Ssh username@servername    # <username> 是服务器 <server> 上的用户账号
-$ Ssh AstriACS@10.6.36.230
+$ Ssh Anna@10.6.36.230
 # 到任何服务器的第一个连接都将生成类似以下内容的消息
 The authenticity of host servername (10.00.00.001) cant be established.
 ECDSA key fingerprint is SHA256:(<a large string>).
@@ -88,7 +88,7 @@ Are you sure you want to continue connecting (yes/no)?
 # 回答 Yes 会将该服务器添加到本地系统的已知 ssh 主机列表中
 # 系统此时会提示你输入密码（也就是远程主机的开机密码）。 作为安全预防措施，密码在键入的过程中不会显示
 # 在连接后，你将看到类似于以下内容的命令shell提示符: 
-astriacs@DESKTOP-U1MHT5M C:\Users\AstriACS> # domain\username@SERVERNAME C:\Users\username>
+anna@DESKTOP-U1MHT5M C:\Users\Anna> # domain\username@SERVERNAME C:\Users\username>
 ```
 
 **2. 在vscode中连接**
